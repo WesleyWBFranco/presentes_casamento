@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "536676396267",
+    "project_id": "casamentobuerba",
+    "storage_bucket": "casamentobuerba.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:536676396267:android:6fc3f5da9be675549aa2ae",
+        "android_client_info": {
+          "package_name": "com.example.presentes_casamento"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMiYkfwHyKsiaL_L1QVTegXOZXSGWzC5I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
