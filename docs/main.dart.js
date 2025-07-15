@@ -99312,7 +99312,7 @@ a.d+=h
 a.c=a.c+h*g}}q.a9(new A.azq(a,q))
 return A.B(null,r)}})
 return A.C($async$uD,r)},
-J(a){var s,r,q,p,o,n,m=this,l=null,k=A.a3d(l,B.t,l,0,l,A.fe(A.aE("Progresso dos Presentes",l,l,l,A.bm().$3$color$fontSize$fontWeight(B.f,28,B.O),l,l),l,l))
+J(a){var s,r,q,p,o,n,m=this,l=null,k=A.a3d(l,B.t,l,0,l,A.fe(A.aE("Progresso dos Presentes",l,l,l,A.bm().$3$color$fontSize$fontWeight(B.f,24,B.O),l,l),l,l))
 if(m.w)s=B.F8
 else{s=m.e
 r=m.d

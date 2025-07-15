@@ -166,7 +166,7 @@ class _StatusScreenState extends State<StatusScreen> {
             'Progresso dos Presentes',
             style: GoogleFonts.libreBaskerville(
               color: Colors.black,
-              fontSize: 28,
+              fontSize: 24,
               fontWeight: FontWeight.bold,
             ),
           ),
