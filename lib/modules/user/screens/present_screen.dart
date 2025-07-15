@@ -174,9 +174,13 @@ class _PresentScreenState extends State<PresentScreen> {
 
                 return GridView.builder(
                   itemCount: presents.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 0.54,
+                  // ALTERADO: Usando SliverGridDelegateWithMaxCrossAxisExtent para melhor responsividade
+                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                    maxCrossAxisExtent: 280.0, // Largura máxima para cada item
+                    childAspectRatio: 0.64, // Mantendo o aspect ratio original
+                    crossAxisSpacing:
+                        8.0, // Espaçamento horizontal entre os cards
+                    mainAxisSpacing: 8.0, // Espaçamento vertical entre os cards
                   ),
                   itemBuilder: (context, index) {
                     final present = presents[index];

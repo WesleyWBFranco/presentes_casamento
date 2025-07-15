@@ -2,7 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:presentes_casamento/data/models/present.dart';
 
 class FirestoreService {
-  final CollectionReference presents = FirebaseFirestore.instance.collection('presents');
+  final CollectionReference presents = FirebaseFirestore.instance.collection(
+    'presents',
+  );
 
   Future<DocumentReference> addPresent(Present present) {
     return presents.add(present.toMap());

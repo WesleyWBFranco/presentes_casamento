@@ -112,7 +112,7 @@ class _MenuScreenState extends State<MenuScreen> {
                       'assets/images/contato.png', // SUBSTITUA PELO SEU CAMINHO CORRETO
                       height: 180, // AUMENTADO o tamanho da imagem
                     ),
-                    title: 'Contatos de Referência',
+                    title: 'Contatos Úteis',
                     buttonText: 'Acessar',
                     onPressed: () {
                       // Navega para a tela de Contatos (índice 4 no StandardScreen)
@@ -210,26 +210,31 @@ class _MenuScreenState extends State<MenuScreen> {
         ), // Borda preta de 1.5pt
       ),
       color: Colors.white, // Fundo branco do card
-      // REMOVIDO O INKWELL QUE ENVOLVIA O CARD INTEIRO
       child: Container(
+        height: 310, // Altura fixa para o conteúdo do card
         padding: const EdgeInsets.all(15),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             iconWidget, // Usando o Widget diretamente aqui
-            const SizedBox(height: 10),
-            Text(
-              title,
-              textAlign: TextAlign.center,
-              style: GoogleFonts.libreBaskerville(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
+            const SizedBox(height: 10), // Espaçamento após a imagem
+            SizedBox(
+              height: 40, // Altura fixa para o texto (acomoda 1 ou 2 linhas)
+              child: Text(
+                title,
+                textAlign: TextAlign.center,
+                maxLines: 2, // Garante que o texto pode ocupar duas linhas
+                overflow:
+                    TextOverflow
+                        .ellipsis, // Lida com overflow se o texto for muito longo
+                style: GoogleFonts.libreBaskerville(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
+                ),
               ),
             ),
-            // Adicionado um SizedBox para alongar o card
-            const SizedBox(
-              height: 25,
-            ), // AUMENTADO o espaçamento para alongar o card
+            const Spacer(), // Empurra o botão para a parte inferior
             SizedBox(
               width: double.infinity, // Preenche a largura do card
               child: ElevatedButton(
@@ -238,7 +243,6 @@ class _MenuScreenState extends State<MenuScreen> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  // O ElevatedButton já tem seu próprio efeito de clique (splash/highlight)
                 ),
                 onPressed: onPressed,
                 child: Text(

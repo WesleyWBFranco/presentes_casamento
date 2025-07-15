@@ -199,55 +199,80 @@ class _CrudScreenState extends State<CrudScreen> {
               ),
             ),
             actions: [
-              SizedBox(
-                width: 130,
-                child: TextButton(
-                  style: ButtonStyle(
-                    side: WidgetStateProperty.all<BorderSide>(
-                      BorderSide(color: Colors.black, width: 2),
+              Row(
+                // Adicionado Row para alinhar os botões lado a lado
+                mainAxisAlignment:
+                    MainAxisAlignment
+                        .spaceAround, // Distribui o espaço entre os botões
+                children: [
+                  Expanded(
+                    // Faz o botão "Cancelar" ocupar o espaço disponível
+                    child: TextButton(
+                      style: ButtonStyle(
+                        side: WidgetStateProperty.all<BorderSide>(
+                          BorderSide(color: Colors.black, width: 2),
+                        ),
+                        padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                          const EdgeInsets.symmetric(
+                            vertical: 8,
+                          ), // Reduz o padding vertical
+                        ),
+                      ),
+                      child: Text(
+                        'Cancelar',
+                        style: GoogleFonts.libreBaskerville(
+                          color: Colors.black,
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      onPressed: () => Navigator.pop(context),
                     ),
                   ),
-                  child: Text(
-                    'Cancelar',
-                    style: GoogleFonts.libreBaskerville(
-                      color: Colors.black,
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  onPressed: () => Navigator.pop(context),
-                ),
-              ),
-              SizedBox(
-                width: 130,
-                child: TextButton(
-                  style: TextButton.styleFrom(backgroundColor: Colors.black),
-                  onPressed: () async {
-                    final present = Present(
-                      name: nameController.text,
-                      price: double.tryParse(priceController.text) ?? 0.0,
-                      imagePath: imagePathController.text,
-                      quantity: int.tryParse(quantityController.text) ?? 0,
-                      category: categoryController.text.trim(),
-                    );
+                  const SizedBox(width: 10), // Espaçamento entre os botões
+                  Expanded(
+                    // Faz o botão "Salvar" ocupar o espaço disponível
+                    child: TextButton(
+                      style: TextButton.styleFrom(
+                        backgroundColor: Colors.black,
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 8,
+                        ), // Reduz o padding vertical
+                      ),
+                      onPressed: () async {
+                        // REVERTIDO: Cria o objeto Present diretamente dos controllers
+                        final present = Present(
+                          name: nameController.text,
+                          price: double.tryParse(priceController.text) ?? 0.0,
+                          imagePath: imagePathController.text,
+                          quantity: int.tryParse(quantityController.text) ?? 0,
+                          category: categoryController.text.trim(),
+                        );
 
-                    if (docID == null) {
-                      await firestoreService.addPresent(present);
-                    } else {
-                      await firestoreService.updatePresent(docID, present);
-                    }
+                        if (docID == null) {
+                          await firestoreService.addPresent(
+                            present,
+                          ); // Passa o objeto Present
+                        } else {
+                          await firestoreService.updatePresent(
+                            docID,
+                            present,
+                          ); // Passa o objeto Present
+                        }
 
-                    Navigator.pop(context);
-                  },
-                  child: Text(
-                    "Salvar",
-                    style: GoogleFonts.libreBaskerville(
-                      color: Colors.white,
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
+                        Navigator.pop(context);
+                      },
+                      child: Text(
+                        "Salvar",
+                        style: GoogleFonts.libreBaskerville(
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                ],
               ),
             ],
           ),
@@ -450,5 +475,16 @@ class _CrudScreenState extends State<CrudScreen> {
         ),
       ),
     );
+  }
+}
+
+QueryDocumentSnapshot? getDocForPresent(
+  Present present,
+  List<QueryDocumentSnapshot> docs,
+) {
+  try {
+    return docs.firstWhere((d) => d['name'] == present.name);
+  } catch (e) {
+    return null;
   }
 }

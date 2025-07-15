@@ -4,7 +4,7 @@ import 'package:presentes_casamento/common/widgets/standard_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:lottie/lottie.dart';
 import 'package:presentes_casamento/services/cart_services.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/services.dart'; // Para Clipboard
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -61,17 +61,21 @@ class _CartScreenState extends State<CartScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Lottie.asset(
-                      'assets/animations/giftAnimation.json',
-                      width: 350,
-                      height: 350,
+                      'assets/animations/giftConfirmation.json',
+                      width: 550,
+                      height: 550,
                       repeat: false,
                     ),
                     const SizedBox(height: 50),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Center(
+                        // Garante que o conteúdo dentro do Padding esteja centralizado
                         child: Text(
                           'Obrigado por fazer parte do nosso Sonho!',
+                          textAlign:
+                              TextAlign
+                                  .center, // Garante centralização do texto
                           style: GoogleFonts.libreBaskerville(
                             color: Colors.black,
                             fontSize: 18,
@@ -114,18 +118,7 @@ class _CartScreenState extends State<CartScreen> {
 
     return Scaffold(
       backgroundColor: Colors.transparent,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        title: Center(
-          child: Text(
-            'Seu Carrinho',
-            style: GoogleFonts.libreBaskerville(
-              color: Colors.black,
-              fontSize: 30,
-            ),
-          ),
-        ),
-      ),
+      appBar: AppBar(backgroundColor: Colors.transparent),
       body:
           cartItems.isEmpty
               ? Center(
@@ -145,6 +138,7 @@ class _CartScreenState extends State<CartScreen> {
                         fontSize: 20,
                       ),
                     ),
+                    SizedBox(height: 150),
                   ],
                 ),
               )
@@ -200,7 +194,7 @@ class _CartScreenState extends State<CartScreen> {
                           ),
                           Text(
                             '${item.selectedQuantity}',
-                            style: GoogleFonts.rajdhani(
+                            style: GoogleFonts.libreBaskerville(
                               color: Colors.black,
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
@@ -292,19 +286,19 @@ class _CartScreenState extends State<CartScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     const SizedBox(height: 24),
-                                    Column(
+                                    // Usando Row para alinhar Pix e chave
+                                    Row(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                          MainAxisAlignment.center,
                                       children: [
                                         Text(
-                                          'Pix:  ',
+                                          'Pix: ',
                                           style: GoogleFonts.rajdhani(
                                             color: Colors.black,
                                             fontSize: 22,
                                             fontWeight: FontWeight.w600,
                                           ),
                                         ),
-                                        const SizedBox(height: 10),
                                         SelectableText(
                                           '08699181922',
                                           style: GoogleFonts.rajdhani(
@@ -361,52 +355,74 @@ class _CartScreenState extends State<CartScreen> {
                                   ],
                                 ),
                                 actions: [
-                                  SizedBox(
-                                    width: 130,
-                                    child: TextButton(
-                                      style: ButtonStyle(
-                                        side: MaterialStateProperty.all<
-                                          BorderSide
-                                        >(
-                                          const BorderSide(
-                                            color: Colors.black,
-                                            width: 2,
+                                  Row(
+                                    // Usando Row para alinhar os botões
+                                    mainAxisAlignment:
+                                        MainAxisAlignment
+                                            .spaceAround, // Distribui o espaço entre os botões
+                                    children: [
+                                      Expanded(
+                                        // Faz o botão "Cancelar" ocupar o espaço disponível
+                                        child: TextButton(
+                                          style: ButtonStyle(
+                                            side: MaterialStateProperty.all<
+                                              BorderSide
+                                            >(
+                                              const BorderSide(
+                                                color: Colors.black,
+                                                width: 2,
+                                              ),
+                                            ),
+                                            padding: MaterialStateProperty.all<
+                                              EdgeInsetsGeometry
+                                            >(
+                                              const EdgeInsets.symmetric(
+                                                vertical: 8,
+                                              ), // Reduz o padding vertical
+                                            ),
                                           ),
+                                          child: Text(
+                                            'Cancelar',
+                                            style: GoogleFonts.libreBaskerville(
+                                              color: Colors.black,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          onPressed:
+                                              () => Navigator.pop(context),
                                         ),
                                       ),
-                                      child: Text(
-                                        'Cancelar',
-                                        style: GoogleFonts.libreBaskerville(
-                                          color: Colors.black,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold,
+                                      const SizedBox(
+                                        width: 10,
+                                      ), // Espaçamento entre os botões
+                                      Expanded(
+                                        // Faz o botão "Confirmar" ocupar o espaço disponível
+                                        child: TextButton(
+                                          style: TextButton.styleFrom(
+                                            backgroundColor: Colors.black,
+                                            padding: const EdgeInsets.symmetric(
+                                              vertical: 8,
+                                            ), // Reduz o padding vertical
+                                          ),
+                                          child: Text(
+                                            'Confirmar',
+                                            style: GoogleFonts.libreBaskerville(
+                                              color: Colors.white,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          onPressed: () async {
+                                            Navigator.pop(context);
+                                            await _confirmCart(
+                                              cartScreenContext,
+                                              cartService,
+                                            ); // Use o contexto capturado
+                                          },
                                         ),
                                       ),
-                                      onPressed: () => Navigator.pop(context),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 130,
-                                    child: TextButton(
-                                      style: TextButton.styleFrom(
-                                        backgroundColor: Colors.black,
-                                      ),
-                                      child: Text(
-                                        'Confirmar',
-                                        style: GoogleFonts.libreBaskerville(
-                                          color: Colors.white,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      onPressed: () async {
-                                        Navigator.pop(context);
-                                        await _confirmCart(
-                                          cartScreenContext,
-                                          cartService,
-                                        ); // Use o contexto capturado
-                                      },
-                                    ),
+                                    ],
                                   ),
                                 ],
                               ),
