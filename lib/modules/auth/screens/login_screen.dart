@@ -71,8 +71,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   'Bruna e Delmar',
                   style: TextStyle(
                     fontFamily: 'Aniyah',
-                    color: Colors.black,
-                    fontSize: 30,
+                    color: Colors.black,  
+                    fontSize: 26,
                   ),
                 ),
 

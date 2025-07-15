@@ -8,6 +8,9 @@ import 'package:presentes_casamento/modules/admin/status_screen.dart';
 import 'package:presentes_casamento/modules/user/screens/cart_screen.dart';
 import 'package:presentes_casamento/modules/user/screens/home_screen.dart';
 import 'package:presentes_casamento/modules/user/screens/present_screen.dart';
+import 'package:presentes_casamento/modules/user/screens/menu_screen.dart'; // Importe a MenuScreen
+import 'package:presentes_casamento/modules/user/screens/contact_screen.dart'; // Importe a ContactScreen
+import 'dart:async'; // Importe para usar Timer e Duration
 
 class StandardScreen extends StatefulWidget {
   final Function(int)? onPageChanged;
@@ -21,11 +24,59 @@ class StandardScreenState extends State<StandardScreen> {
   int _selectedIndex = 0;
   late Future<String?> _userRoleFuture = Future.value(null);
 
+  // --- Lógica do Cronômetro ---
+  late Timer _timer;
+  Duration _timeLeft = const Duration();
+  final DateTime weddingDate = DateTime(
+    2025,
+    9,
+    20,
+    17,
+    0,
+  ); // Data do casamento
+
   @override
   void initState() {
     super.initState();
     _userRoleFuture = _getUserRole();
+    _startCountdown(); // Inicia o cronômetro aqui
   }
+
+  @override
+  void dispose() {
+    _timer.cancel(); // Cancela o timer ao descartar o widget
+    super.dispose();
+  }
+
+  // Inicia o timer para o contador regressivo
+  void _startCountdown() {
+    _timeLeft = weddingDate.difference(DateTime.now());
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (mounted) {
+        // Verifica se o widget ainda está montado antes de chamar setState
+        setState(() {
+          _timeLeft = weddingDate.difference(DateTime.now());
+          if (_timeLeft.isNegative) {
+            _timer.cancel();
+          }
+        });
+      }
+    });
+  }
+
+  // Formata a duração para exibir Dias : Horas : Minutos : Segundos com unidades
+  String _formatDuration(Duration duration) {
+    if (duration.isNegative) {
+      return '0 dias : 0 horas : 0 min : 0 seg'; // Se a data já passou, exibe zero
+    }
+    int days = duration.inDays;
+    int hours = duration.inHours % 24;
+    int minutes = duration.inMinutes % 60;
+    int seconds = duration.inSeconds % 60;
+
+    return '$days dias : $hours horas : $minutes min : $seconds seg';
+  }
+  // --- Fim da Lógica do Cronômetro ---
 
   Future<String?> _getUserRole() async {
     final user = FirebaseAuth.instance.currentUser;
@@ -50,8 +101,7 @@ class StandardScreenState extends State<StandardScreen> {
       backgroundColor: Colors.grey[300], // Cor das laterais
       body: Center(
         child: Container(
-          width:
-              500, // Largura fixa simulando tela de celular (ajuste conforme seu layout)
+          width: 500, // Largura fixa simulando tela de celular
           height: 900, // Altura fixa simulando tela de celular
           decoration: BoxDecoration(
             color: Colors.white, // Fundo branco apenas no conteúdo central
@@ -84,11 +134,13 @@ class StandardScreenState extends State<StandardScreen> {
                   const OrdersScreen(),
                 ];
                 drawerItems = [
+                  SizedBox(height: 50),
                   _buildDrawerItem(
                     icon: const Icon(Icons.timeline, color: Colors.white),
                     title: "S T A T U S",
                     onTap: () => changePage(0),
                   ),
+                  SizedBox(height: 15),
                   _buildDrawerItem(
                     icon: const Icon(
                       Icons.settings_outlined,
@@ -97,6 +149,7 @@ class StandardScreenState extends State<StandardScreen> {
                     title: "C O N F I G U R A R",
                     onTap: () => changePage(1),
                   ),
+                  SizedBox(height: 15),
                   _buildDrawerItem(
                     icon: const Icon(
                       Icons.assignment_outlined,
@@ -107,12 +160,16 @@ class StandardScreenState extends State<StandardScreen> {
                   ),
                 ];
               } else {
+                // Páginas para usuários normais
                 pages = [
                   const HomeScreen(),
                   const PresentScreen(),
                   const CartScreen(),
+                  const MenuScreen(), // Índice 3 (Informações)
+                  const ContactScreen(), // Índice 4 (Contatos)
                 ];
                 drawerItems = [
+                  SizedBox(height: 50),
                   Padding(
                     padding: const EdgeInsets.only(left: 5.0),
                     child: _buildDrawerItem(
@@ -125,6 +182,7 @@ class StandardScreenState extends State<StandardScreen> {
                       onTap: () => changePage(0),
                     ),
                   ),
+                  SizedBox(height: 15),
                   Padding(
                     padding: const EdgeInsets.only(left: 5.0),
                     child: _buildDrawerItem(
@@ -137,6 +195,7 @@ class StandardScreenState extends State<StandardScreen> {
                       onTap: () => changePage(1),
                     ),
                   ),
+                  SizedBox(height: 15),
                   _buildDrawerItem(
                     icon: Image.asset(
                       'assets/images/carrinho2.png',
@@ -145,6 +204,18 @@ class StandardScreenState extends State<StandardScreen> {
                     ),
                     title: "C A R R I N H O",
                     onTap: () => changePage(2),
+                  ),
+                  SizedBox(height: 15),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 5.0),
+                    child: _buildDrawerItem(
+                      icon: const Icon(
+                        Icons.info_outline,
+                        color: Colors.white,
+                      ), // Ícone de informações com borda
+                      title: "I N F O R M A Ç Õ E S", // Texto alterado
+                      onTap: () => changePage(3), // Índice da MenuScreen
+                    ),
                   ),
                 ];
               }
@@ -166,16 +237,17 @@ class StandardScreenState extends State<StandardScreen> {
                           },
                         ),
                   ),
-                  title: Center(
-                    child: Text(
-                      'Lista de Presentes',
-                      style: GoogleFonts.greatVibes(
-                        color: Colors.white,
-                        fontSize: 34,
-                        fontWeight: FontWeight.normal,
-                      ),
+                  // CRONÔMETRO AQUI COMO TÍTULO CENTRAL (UMA ÚNICA LINHA)
+                  title: Text(
+                    _formatDuration(_timeLeft), // Exibe o cronômetro formatado
+                    style: GoogleFonts.rajdhani(
+                      color: Colors.white,
+                      fontSize: 16, // ALTERADO: Fonte aumentada para 18
+                      fontWeight: FontWeight.w500,
                     ),
+                    textAlign: TextAlign.center, // Centraliza o texto
                   ),
+                  centerTitle: true, // Centraliza o título
                   actions: <Widget>[
                     if (userRole == 'user')
                       IconButton(
@@ -224,7 +296,7 @@ class StandardScreenState extends State<StandardScreen> {
                             ),
                             title: Text(
                               'Sair',
-                              style: GoogleFonts.cormorantSc(
+                              style: GoogleFonts.libreBaskerville(
                                 color: Colors.white,
                                 fontSize: 18,
                                 fontWeight: FontWeight.w500,
@@ -252,6 +324,7 @@ class StandardScreenState extends State<StandardScreen> {
     if (fromDrawer) {
       Navigator.pop(context);
     }
+    widget.onPageChanged?.call(index);
   }
 
   Widget _buildDrawerItem({
@@ -269,7 +342,7 @@ class StandardScreenState extends State<StandardScreen> {
         ),
         title: Text(
           title,
-          style: GoogleFonts.cormorantSc(
+          style: GoogleFonts.libreBaskerville(
             color: Colors.white,
             fontSize: 16,
             fontWeight: FontWeight.w500,

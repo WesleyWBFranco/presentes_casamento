@@ -61,7 +61,7 @@ class _CartScreenState extends State<CartScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Lottie.asset(
-                      'assets/animations/confirm.json',
+                      'assets/animations/giftAnimation.json',
                       width: 350,
                       height: 350,
                       repeat: false,
