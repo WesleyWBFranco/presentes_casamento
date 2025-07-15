@@ -58,7 +58,7 @@ class _PresentScreenState extends State<PresentScreen> {
     // Considerando que a largura do StandardScreen é 500, um breakpoint de 550
     // significa que telas menores que 550 (como a maioria dos celulares)
     // usarão 0.50, e telas maiores (como a simulação de 500px no desktop) usarão 0.64.
-    final double responsiveChildAspectRatio = screenWidth > 550.0 ? 0.64 : 0.50;
+    final double responsiveChildAspectRatio = screenWidth > 550.0 ? 0.64 : 0.48;
 
     return Scaffold(
       backgroundColor: Colors.transparent,

@@ -99755,7 +99755,7 @@ p=A.U(o,A.j(o).c)
 q.a9(new A.ax9(q,p))
 return A.B(null,r)}})
 return A.C($async$ze,r)},
-J(a){var s,r,q,p=this,o=null,n=A.aEO(a,!0,t.NG).a.length,m=A.bD(a,o,t.w).w.a.a>550?0.64:0.5,l=A.bm().$3$color$fontSize$fontWeight(B.h2,16,B.b3)
+J(a){var s,r,q,p=this,o=null,n=A.aEO(a,!0,t.NG).a.length,m=A.bD(a,o,t.w).w.a.a>550?0.64:0.48,l=A.bm().$3$color$fontSize$fontWeight(B.h2,16,B.b3)
 l=A.ib(p.f,A.kH(o,o,o,o,o,o,o,o,!0,new A.cG(4,A.bv(12),B.mT),o,o,o,o,o,B.i,!0,o,o,o,o,new A.cG(4,A.bv(12),B.bq),o,o,o,o,o,o,o,o,l,"Pesquisar por nome ou pre\xe7o",o,o,o,o,o,o,o,o,o,!0,!0,o,B.oT,o,o,o,o,o,o,o,o,o,o,o),o,!1,new A.axh(p))
 s=A.bZ(A.acK(new A.axi(p),p.e.length,o,B.b9),40,o)
 r=$.ba
