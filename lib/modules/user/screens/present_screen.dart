@@ -52,6 +52,14 @@ class _PresentScreenState extends State<PresentScreen> {
     final cartService = Provider.of<CartService>(context);
     final cartItemCount = cartService.items.length;
 
+    // Obter a largura da tela
+    final screenWidth = MediaQuery.of(context).size.width;
+    // Definir o breakpoint para alternar o childAspectRatio
+    // Considerando que a largura do StandardScreen é 500, um breakpoint de 550
+    // significa que telas menores que 550 (como a maioria dos celulares)
+    // usarão 0.50, e telas maiores (como a simulação de 500px no desktop) usarão 0.64.
+    final double responsiveChildAspectRatio = screenWidth > 550.0 ? 0.64 : 0.50;
+
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Column(
@@ -174,10 +182,10 @@ class _PresentScreenState extends State<PresentScreen> {
 
                 return GridView.builder(
                   itemCount: presents.length,
-                  // ALTERADO: Usando SliverGridDelegateWithMaxCrossAxisExtent para melhor responsividade
-                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                  gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                     maxCrossAxisExtent: 280.0, // Largura máxima para cada item
-                    childAspectRatio: 0.64, // Mantendo o aspect ratio original
+                    childAspectRatio:
+                        responsiveChildAspectRatio, // Usando o valor responsivo
                     crossAxisSpacing:
                         8.0, // Espaçamento horizontal entre os cards
                     mainAxisSpacing: 8.0, // Espaçamento vertical entre os cards

@@ -72,7 +72,7 @@ class _CartScreenState extends State<CartScreen> {
                       child: Center(
                         // Garante que o conteúdo dentro do Padding esteja centralizado
                         child: Text(
-                          'Obrigado por fazer parte do nosso Sonho!',
+                          'OBRIGADO POR FAZER PARTE DO NOSSO SONHO!',
                           textAlign:
                               TextAlign
                                   .center, // Garante centralização do texto
