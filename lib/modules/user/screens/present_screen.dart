@@ -6,9 +6,16 @@ import 'package:presentes_casamento/data/models/present.dart';
 import 'package:presentes_casamento/modules/user/widgets/present_card.dart';
 import 'package:provider/provider.dart';
 import 'package:presentes_casamento/services/cart_services.dart';
+import 'package:flutter/services.dart'; // Importe para usar Clipboard
 
 class PresentScreen extends StatefulWidget {
-  const PresentScreen({super.key});
+  // Adicionado um novo parâmetro para controlar a exibição do popup
+  final bool shouldShowPixPopup;
+
+  const PresentScreen({
+    super.key,
+    this.shouldShowPixPopup = false, // Valor padrão é false
+  });
 
   @override
   State<PresentScreen> createState() => _PresentScreenState();
@@ -20,10 +27,42 @@ class _PresentScreenState extends State<PresentScreen> {
   final TextEditingController _searchController = TextEditingController();
   String _searchQuery = '';
 
+  // Dados do PIX (você pode alterar estes valores)
+  final String pixQrCodeImagePath =
+      'assets/images/qrcode.png'; // SUBSTITUA PELO SEU CAMINHO DO QR CODE
+  final String pixCopyPasteCode =
+      '08699181922'; // SUBSTITUA PELO SEU CÓDIGO PIX COPIÁVEL
+
   @override
   void initState() {
     super.initState();
     _loadCategories();
+
+    // Exibir o popup após 2 segundos, APENAS SE shouldShowPixPopup for verdadeiro
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (widget.shouldShowPixPopup) {
+        // Verifica o novo parâmetro do widget
+        Future.delayed(const Duration(seconds: 2), () {
+          if (mounted) {
+            // Verifica se o widget ainda está na árvore de widgets
+            _showPixPopup(context);
+          }
+        });
+      }
+    });
+  }
+
+  @override
+  void didUpdateWidget(covariant PresentScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // Exibir o popup após 2 segundos APENAS SE shouldShowPixPopup mudar de false para true
+    if (!oldWidget.shouldShowPixPopup && widget.shouldShowPixPopup) {
+      Future.delayed(const Duration(seconds: 2), () {
+        if (mounted) {
+          _showPixPopup(context);
+        }
+      });
+    }
   }
 
   @override
@@ -45,6 +84,146 @@ class _PresentScreenState extends State<PresentScreen> {
     setState(() {
       categories = ['Todos', ...uniqueCategories];
     });
+  }
+
+  // Método para exibir o popup do PIX
+  void _showPixPopup(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible:
+          false, // Impede que o popup seja fechado clicando fora
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+            side: const BorderSide(color: Colors.black, width: 2),
+          ),
+          // AQUI ESTÁ A MUDANÇA: Definindo o maxWidth para o AlertDialog
+          // Considerando que a largura do StandardScreen é 500, um maxWidth de 450
+          // garante que o popup tenha um bom espaçamento interno.
+          // Você pode ajustar este valor se necessário.
+          // Removido insetPadding e contentPadding para usar o maxWidth
+          // e padding interno do Column para controle mais preciso.
+          // insetPadding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 24.0),
+          // contentPadding: const EdgeInsets.all(20.0),
+          // actionsPadding: const EdgeInsets.all(20.0),
+          // Definindo uma largura máxima explícita para o AlertDialog
+          // Isso garante que ele não exceda a largura da StandardScreen
+          // e tenha um bom espaçamento lateral.
+          // O valor 450.0 é uma sugestão, você pode ajustar.
+          content: Container(
+            width:
+                450.0, // AQUI ESTÁ A MUDANÇA PRINCIPAL PARA LIMITAR A LARGURA
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    'Contribuição para os Noivos',
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.libreBaskerville(
+                      color: Colors.black,
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 10), // Espaçamento após o título
+                  Text(
+                    'Olá! Se preferir fazer uma contribuição direta aos noivos via PIX, você pode usar o QR Code ou o código abaixo. Caso contrário, sinta-se à vontade para explorar nossa lista de presentes!',
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.libreBaskerville(
+                      color: Colors.black87,
+                      fontSize: 16,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  // Imagem do QR Code
+                  Image.asset(
+                    pixQrCodeImagePath,
+                    height: 180, // Ajuste o tamanho conforme necessário
+                    width: 180,
+                    fit: BoxFit.contain,
+                    errorBuilder: (context, error, stackTrace) {
+                      return const Icon(
+                        Icons.qr_code_2,
+                        size: 180,
+                        color: Colors.grey,
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  // Código PIX copiável
+                  GestureDetector(
+                    onTap: () {
+                      Clipboard.setData(ClipboardData(text: pixCopyPasteCode));
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Código PIX copiado!'),
+                          backgroundColor: Colors.green,
+                        ),
+                      );
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 15,
+                        vertical: 10,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.grey[200],
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(color: Colors.black, width: 1),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            pixCopyPasteCode,
+                            style: GoogleFonts.rajdhani(
+                              color: Colors.black,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          const Icon(Icons.copy, size: 20, color: Colors.black),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 30),
+                  // Botão para fechar o popup e ir para a lista de presentes
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.black,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 15),
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context); // Fecha o popup
+                      },
+                      child: Text(
+                        'Continuar para Lista de Presentes',
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.libreBaskerville(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -162,7 +341,7 @@ class _PresentScreenState extends State<PresentScreen> {
                             name: data['name'] ?? '',
                             price: (data['price'] ?? 0).toDouble(),
                             imagePath: data['imagePath'] ?? '',
-                            quantity: data['quantity'] ?? 0,
+                            quantity: (data['quantity'] ?? 0).toInt(),
                             category: data['category'] ?? '',
                           );
                         })

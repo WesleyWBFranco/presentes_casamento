@@ -46,52 +46,41 @@ class _MenuScreenState extends State<MenuScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // A MenuScreen é renderizada dentro do StandardScreen,
-    // que já fornece o Container com dimensões fixas e bordas.
-    // Portanto, não precisamos de um Scaffold próprio aqui.
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
         child: Column(
           crossAxisAlignment:
-              CrossAxisAlignment
-                  .center, // Centraliza o conteúdo horizontalmente
+              CrossAxisAlignment.center, // Centraliza o conteúdo horizontalmente
           children: [
             // Primeira linha de cards (Localização da Igreja e Localização da Festa)
             Row(
               mainAxisAlignment:
-                  MainAxisAlignment
-                      .spaceEvenly, // Distribui o espaço igualmente
+                  MainAxisAlignment.spaceEvenly, // Distribui o espaço igualmente
               children: [
                 Expanded(
-                  // Faz o card expandir para preencher o espaço disponível
                   child: _buildCard(
                     iconWidget: Image.asset(
-                      // Usando Image.asset aqui
                       'assets/images/igreja.png', // SUBSTITUA PELO SEU CAMINHO CORRETO
-                      height: 180, // AUMENTADO o tamanho da imagem
+                      height: 180,
                     ),
                     title: 'Localização da Igreja',
                     buttonText: 'Acessar',
                     onPressed: () {
-                      // Link para a localização da Igreja no Google Maps
                       _launchUrl('https://maps.app.goo.gl/FqQGdz3brF1zhyE78');
                     },
                   ),
                 ),
                 const SizedBox(width: 15), // Espaçamento entre os cards
                 Expanded(
-                  // Faz o card expandir para preencher o espaço disponível
                   child: _buildCard(
                     iconWidget: Image.asset(
-                      // Usando Image.asset aqui
                       'assets/images/festa.png', // SUBSTITUA PELO SEU CAMINHO CORRETO
-                      height: 180, // AUMENTADO o tamanho da imagem
+                      height: 180,
                     ),
                     title: 'Localização da Festa',
                     buttonText: 'Acessar',
                     onPressed: () {
-                      // Link para a localização da Festa no Google Maps
                       _launchUrl('https://maps.app.goo.gl/HYjaUHja6br5E137A');
                     },
                   ),
@@ -99,26 +88,37 @@ class _MenuScreenState extends State<MenuScreen> {
               ],
             ),
             const SizedBox(height: 30), // Espaçamento entre as linhas de cards
-            // Segunda linha de cards (Contatos e Presentes)
+            // Segunda linha de cards (Lista de Presença e Contatos Úteis)
             Row(
               mainAxisAlignment:
-                  MainAxisAlignment
-                      .spaceEvenly, // Distribui o espaço igualmente
+                  MainAxisAlignment.spaceEvenly, // Distribui o espaço igualmente
               children: [
                 Expanded(
                   child: _buildCard(
                     iconWidget: Image.asset(
-                      // Usando Image.asset aqui
+                      'assets/images/presença.png', // SUBSTITUA AQUI PELO CAMINHO DA SUA IMAGEM (EX: 'assets/images/lista_presenca.png')
+                      height: 180,
+                    ),
+                    title: 'Lista de Presença',
+                    buttonText: 'Acessar',
+                    onPressed: () {
+                      // SUBSTITUA AQUI PELO LINK DO SEU FORMULÁRIO DO GOOGLE
+                      _launchUrl('https://forms.gle/WqYn3VXgcsCYArbD8');
+                    },
+                  ),
+                ),
+                const SizedBox(width: 15), // Espaçamento entre os cards
+                Expanded(
+                  child: _buildCard(
+                    iconWidget: Image.asset(
                       'assets/images/contato.png', // SUBSTITUA PELO SEU CAMINHO CORRETO
-                      height: 180, // AUMENTADO o tamanho da imagem
+                      height: 180,
                     ),
                     title: 'Contatos Úteis',
                     buttonText: 'Acessar',
                     onPressed: () {
-                      // Navega para a tela de Contatos (índice 4 no StandardScreen)
                       final standardScreenState =
-                          context
-                              .findAncestorStateOfType<StandardScreenState>();
+                          context.findAncestorStateOfType<StandardScreenState>();
                       if (standardScreenState != null) {
                         standardScreenState.changePage(
                           4,
@@ -142,26 +142,31 @@ class _MenuScreenState extends State<MenuScreen> {
                     },
                   ),
                 ),
-                const SizedBox(width: 15), // Espaçamento entre os cards
+              ],
+            ),
+            const SizedBox(height: 30), // Espaçamento entre as linhas de cards
+            // Terceira linha de cards (Lista de Presentes)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center, // Centraliza o card se estiver sozinho
+              children: [
                 Expanded(
                   child: _buildCard(
                     iconWidget: Image.asset(
-                      // Usando Image.asset aqui
                       'assets/images/presentes.png', // SUBSTITUA PELO SEU CAMINHO CORRETO
-                      height: 180, // AUMENTADO o tamanho da imagem
+                      height: 180,
                     ),
                     title: 'Lista de Presentes',
                     buttonText: 'Acessar',
                     onPressed: () {
-                      // Navega para a tela de Presentes (índice 1 no StandardScreen)
                       final standardScreenState =
-                          context
-                              .findAncestorStateOfType<StandardScreenState>();
+                          context.findAncestorStateOfType<StandardScreenState>();
                       if (standardScreenState != null) {
+                        // AQUI ESTÁ A MUDANÇA: Passa o argumento para ativar o popup na PresentScreen
                         standardScreenState.changePage(
-                          1,
+                          1, // Índice da PresentScreen
                           fromDrawer: false,
-                        ); // PresentScreen é o índice 1
+                          arguments: {'showPixPopup': true},
+                        );
                       } else {
                         debugPrint(
                           'StandardScreenState não encontrado. Não foi possível navegar para Presentes.',
@@ -190,43 +195,35 @@ class _MenuScreenState extends State<MenuScreen> {
   }
 
   // Widget auxiliar unificado para construir todos os cards
-  // Agora aceita um Widget para o ícone
   Widget _buildCard({
-    required Widget iconWidget, // Alterado de IconData para Widget
+    required Widget iconWidget,
     required String title,
     required String buttonText,
     required VoidCallback onPressed,
   }) {
     return Card(
-      elevation: 0, // Sem sombra para o fundo branco/transparente
-      margin:
-          EdgeInsets
-              .zero, // Remove a margem padrão do Card para controlar o espaçamento com SizedBox
+      elevation: 0,
+      margin: EdgeInsets.zero,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
-        side: const BorderSide(
-          color: Colors.black,
-          width: 1.5,
-        ), // Borda preta de 1.5pt
+        side: const BorderSide(color: Colors.black, width: 1.5),
       ),
-      color: Colors.white, // Fundo branco do card
+      color: Colors.white,
       child: Container(
         height: 310, // Altura fixa para o conteúdo do card
         padding: const EdgeInsets.all(15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            iconWidget, // Usando o Widget diretamente aqui
-            const SizedBox(height: 10), // Espaçamento após a imagem
+            iconWidget,
+            const SizedBox(height: 10),
             SizedBox(
               height: 40, // Altura fixa para o texto (acomoda 1 ou 2 linhas)
               child: Text(
                 title,
                 textAlign: TextAlign.center,
-                maxLines: 2, // Garante que o texto pode ocupar duas linhas
-                overflow:
-                    TextOverflow
-                        .ellipsis, // Lida com overflow se o texto for muito longo
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
                 style: GoogleFonts.libreBaskerville(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
@@ -234,9 +231,9 @@ class _MenuScreenState extends State<MenuScreen> {
                 ),
               ),
             ),
-            const Spacer(), // Empurra o botão para a parte inferior
+            const Spacer(),
             SizedBox(
-              width: double.infinity, // Preenche a largura do card
+              width: double.infinity,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.black,

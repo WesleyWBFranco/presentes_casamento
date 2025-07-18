@@ -57,7 +57,9 @@ class _PresentCardState extends State<PresentCard> {
                       widget.present.imagePath.isNotEmpty
                           ? Image.network(
                             widget.present.imagePath,
-                            fit: BoxFit.scaleDown,
+                            fit:
+                                BoxFit
+                                    .cover, // ALTERADO: De scaleDown para cover
                             errorBuilder: (context, error, stackTrace) {
                               return const Center(
                                 child: Icon(Icons.image_not_supported),

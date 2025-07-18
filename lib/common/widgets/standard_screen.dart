@@ -8,9 +8,9 @@ import 'package:presentes_casamento/modules/admin/status_screen.dart';
 import 'package:presentes_casamento/modules/user/screens/cart_screen.dart';
 import 'package:presentes_casamento/modules/user/screens/home_screen.dart';
 import 'package:presentes_casamento/modules/user/screens/present_screen.dart';
-import 'package:presentes_casamento/modules/user/screens/menu_screen.dart'; // Importe a MenuScreen
-import 'package:presentes_casamento/modules/user/screens/contact_screen.dart'; // Importe a ContactScreen
-import 'dart:async'; // Importe para usar Timer e Duration
+import 'package:presentes_casamento/modules/user/screens/menu_screen.dart';
+import 'package:presentes_casamento/modules/user/screens/contact_screen.dart';
+import 'package:presentes_casamento/common/widgets/countdown_display.dart'; // Importe o novo widget
 
 class StandardScreen extends StatefulWidget {
   final Function(int)? onPageChanged;
@@ -24,59 +24,21 @@ class StandardScreenState extends State<StandardScreen> {
   int _selectedIndex = 0;
   late Future<String?> _userRoleFuture = Future.value(null);
 
-  // --- Lógica do Cronômetro ---
-  late Timer _timer;
-  Duration _timeLeft = const Duration();
-  final DateTime weddingDate = DateTime(
-    2025,
-    9,
-    20,
-    17,
-    0,
-  ); // Data do casamento
+  // Adicionado estado para controlar a exibição do popup na PresentScreen
+  bool _showPixPopupOnPresentScreen = false;
 
   @override
   void initState() {
     super.initState();
     _userRoleFuture = _getUserRole();
-    _startCountdown(); // Inicia o cronômetro aqui
+    // A lógica do cronômetro foi movida para CountdownDisplay
   }
 
   @override
   void dispose() {
-    _timer.cancel(); // Cancela o timer ao descartar o widget
+    // Não precisa cancelar o timer aqui, pois ele está no CountdownDisplay
     super.dispose();
   }
-
-  // Inicia o timer para o contador regressivo
-  void _startCountdown() {
-    _timeLeft = weddingDate.difference(DateTime.now());
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (mounted) {
-        // Verifica se o widget ainda está montado antes de chamar setState
-        setState(() {
-          _timeLeft = weddingDate.difference(DateTime.now());
-          if (_timeLeft.isNegative) {
-            _timer.cancel();
-          }
-        });
-      }
-    });
-  }
-
-  // Formata a duração para exibir Dias : Horas : Minutos : Segundos com unidades
-  String _formatDuration(Duration duration) {
-    if (duration.isNegative) {
-      return '0 dias : 0 horas : 0 min : 0 seg'; // Se a data já passou, exibe zero
-    }
-    int days = duration.inDays;
-    int hours = duration.inHours % 24;
-    int minutes = duration.inMinutes % 60;
-    int seconds = duration.inSeconds % 60;
-
-    return '$days dias : $hours horas : $minutes min : $seconds seg';
-  }
-  // --- Fim da Lógica do Cronômetro ---
 
   Future<String?> _getUserRole() async {
     final user = FirebaseAuth.instance.currentUser;
@@ -93,6 +55,55 @@ class StandardScreenState extends State<StandardScreen> {
 
   void logout() {
     FirebaseAuth.instance.signOut();
+  }
+
+  // Método para mudar de página, agora aceita argumentos para PresentScreen
+  void changePage(
+    int index, {
+    bool fromDrawer = true,
+    Map<String, dynamic>? arguments,
+  }) {
+    setState(() {
+      _selectedIndex = index;
+      // Se estiver navegando para a PresentScreen (índice 1) e houver o argumento showPixPopup
+      if (index == 1 &&
+          arguments != null &&
+          arguments['showPixPopup'] == true) {
+        _showPixPopupOnPresentScreen = true;
+      } else {
+        _showPixPopupOnPresentScreen = false;
+      }
+    });
+    if (fromDrawer) {
+      Navigator.pop(context);
+    }
+    widget.onPageChanged?.call(index);
+  }
+
+  Widget _buildDrawerItem({
+    required Widget icon,
+    required String title,
+    required VoidCallback onTap,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 25.0),
+      child: ListTile(
+        leading: Align(
+          alignment: Alignment.centerLeft,
+          widthFactor: 1.0,
+          child: icon,
+        ),
+        title: Text(
+          title,
+          style: GoogleFonts.libreBaskerville(
+            color: Colors.white,
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        onTap: onTap,
+      ),
+    );
   }
 
   @override
@@ -163,7 +174,10 @@ class StandardScreenState extends State<StandardScreen> {
                 // Páginas para usuários normais
                 pages = [
                   const HomeScreen(),
-                  const PresentScreen(),
+                  // Passa o estado _showPixPopupOnPresentScreen para PresentScreen
+                  PresentScreen(
+                    shouldShowPixPopup: _showPixPopupOnPresentScreen,
+                  ),
                   const CartScreen(),
                   const MenuScreen(), // Índice 3 (Informações)
                   const ContactScreen(), // Índice 4 (Contatos)
@@ -192,7 +206,10 @@ class StandardScreenState extends State<StandardScreen> {
                         height: 20,
                       ),
                       title: "P R E S E N T E S",
-                      onTap: () => changePage(1),
+                      // Passa o argumento para ativar o popup na PresentScreen
+                      onTap:
+                          () =>
+                              changePage(1, arguments: {'showPixPopup': true}),
                     ),
                   ),
                   SizedBox(height: 15),
@@ -238,15 +255,7 @@ class StandardScreenState extends State<StandardScreen> {
                         ),
                   ),
                   // CRONÔMETRO AQUI COMO TÍTULO CENTRAL (UMA ÚNICA LINHA)
-                  title: Text(
-                    _formatDuration(_timeLeft), // Exibe o cronômetro formatado
-                    style: GoogleFonts.rajdhani(
-                      color: Colors.white,
-                      fontSize: 16, // ALTERADO: Fonte aumentada para 18
-                      fontWeight: FontWeight.w500,
-                    ),
-                    textAlign: TextAlign.center, // Centraliza o texto
-                  ),
+                  title: const CountdownDisplay(), // Usa o novo widget aqui
                   centerTitle: true, // Centraliza o título
                   actions: <Widget>[
                     if (userRole == 'user')
@@ -276,6 +285,7 @@ class StandardScreenState extends State<StandardScreen> {
                               child: Image.asset(
                                 'assets/images/presente.png',
                                 color: Colors.white,
+                                height: 80, // Ajustado para ser mais visível
                               ),
                             ),
                           ),
@@ -313,42 +323,6 @@ class StandardScreenState extends State<StandardScreen> {
             },
           ),
         ),
-      ),
-    );
-  }
-
-  void changePage(int index, {bool fromDrawer = true}) {
-    setState(() {
-      _selectedIndex = index;
-    });
-    if (fromDrawer) {
-      Navigator.pop(context);
-    }
-    widget.onPageChanged?.call(index);
-  }
-
-  Widget _buildDrawerItem({
-    required Widget icon,
-    required String title,
-    required VoidCallback onTap,
-  }) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 25.0),
-      child: ListTile(
-        leading: Align(
-          alignment: Alignment.centerLeft,
-          widthFactor: 1.0,
-          child: icon,
-        ),
-        title: Text(
-          title,
-          style: GoogleFonts.libreBaskerville(
-            color: Colors.white,
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-        onTap: onTap,
       ),
     );
   }
