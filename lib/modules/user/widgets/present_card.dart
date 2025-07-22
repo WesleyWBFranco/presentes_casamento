@@ -8,13 +8,15 @@ import 'package:provider/provider.dart';
 class PresentCard extends StatefulWidget {
   final Present present;
   final String documentId;
-  final double imageHeight;
+  final double
+  imageHeight; // This parameter will now be overridden by fixed image size
 
   const PresentCard({
     super.key,
     required this.present,
     required this.documentId,
-    this.imageHeight = 150.0,
+    this.imageHeight =
+        150.0, // This value will be ignored for the actual image size
   });
 
   @override
@@ -50,23 +52,26 @@ class _PresentCardState extends State<PresentCard> {
                 borderRadius: const BorderRadius.vertical(
                   top: Radius.circular(8),
                 ),
-                child: SizedBox(
-                  height: widget.imageHeight,
-                  width: double.infinity,
-                  child:
-                      widget.present.imagePath.isNotEmpty
-                          ? Image.network(
-                            widget.present.imagePath,
-                            fit:
-                                BoxFit
-                                    .cover, // ALTERADO: De scaleDown para cover
-                            errorBuilder: (context, error, stackTrace) {
-                              return const Center(
-                                child: Icon(Icons.image_not_supported),
-                              );
-                            },
-                          )
-                          : const Center(child: Icon(Icons.image)),
+                child: Center(
+                  // Center the image within its allocated space
+                  child: SizedBox(
+                    height: 100.0, // Fixed height for the image area
+                    width: 100.0, // Fixed width for the image area
+                    child:
+                        widget.present.imagePath.isNotEmpty
+                            ? Image.network(
+                              widget.present.imagePath,
+                              fit:
+                                  BoxFit
+                                      .contain, // Changed to contain to show full image and prevent stretching
+                              errorBuilder: (context, error, stackTrace) {
+                                return const Center(
+                                  child: Icon(Icons.image_not_supported),
+                                );
+                              },
+                            )
+                            : const Center(child: Icon(Icons.image)),
+                  ),
                 ),
               ),
               Padding(
@@ -74,20 +79,21 @@ class _PresentCardState extends State<PresentCard> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      widget.present.name,
-                      style: GoogleFonts.libreBaskerville(
-                        color: Colors.black,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
+                    SizedBox(
+                      // Fixed height for the title to ensure consistent card size
+                      height: 40.0, // Height to accommodate two lines of text
+                      child: Text(
+                        widget.present.name,
+                        style: GoogleFonts.libreBaskerville(
+                          color: Colors.black,
+                          fontSize: 15, // Decreased font size
+                          fontWeight: FontWeight.w500,
+                        ),
+                        maxLines: 2, // Display up to two lines
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
                     ),
                     const SizedBox(height: 8),
-                    // =========================================================
-                    // MUDANÇA PRINCIPAL AQUI: Envolver com SizedBox de altura fixa
-                    // =========================================================
                     SizedBox(
                       height: actionButtonHeight, // Garante altura consistente
                       width: double.infinity,
@@ -109,11 +115,9 @@ class _PresentCardState extends State<PresentCard> {
                                   ),
                                 ),
                                 style: ElevatedButton.styleFrom(
-                                  // =============== ALTERADO AQUI ===============
                                   disabledBackgroundColor:
                                       Colors
                                           .white, // Define a cor de fundo para branco quando desabilitado
-                                  // ==========================================
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(8),
                                     side: BorderSide(
@@ -186,9 +190,6 @@ class _PresentCardState extends State<PresentCard> {
                                 ),
                               ),
                     ),
-                    // =========================================================
-                    // FIM DA MUDANÇA PRINCIPAL
-                    // =========================================================
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
@@ -250,10 +251,8 @@ class _PresentCardState extends State<PresentCard> {
                           ),
                         ),
                         style: ElevatedButton.styleFrom(
-                          // =============== ALTERADO AQUI ===============
                           backgroundColor:
                               isComplete ? Colors.white : Colors.black,
-                          // ==========================================
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
                             side: BorderSide(

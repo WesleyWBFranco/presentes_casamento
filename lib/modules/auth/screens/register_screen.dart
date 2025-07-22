@@ -108,7 +108,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                 ),
                 const SizedBox(height: 48),
-
+                Text(
+                  'Bruna e Delmar',
+                  style: TextStyle(
+                    fontFamily: 'Aniyah',
+                    color: Colors.black,
+                    fontSize: 26,
+                  ),
+                ),
+                const SizedBox(height: 38),
                 TextField(
                   controller: nameController,
                   decoration: InputDecoration(

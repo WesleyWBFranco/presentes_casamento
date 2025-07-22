@@ -21,9 +21,9 @@ class _VerifyState extends State<Verify> {
   @override
   Widget build(BuildContext context) {
     if (showLoginPage) {
-      return LoginScreen(onTap: togglePages);
-    } else {
       return RegisterScreen(onTap: togglePages);
+    } else {
+      return LoginScreen(onTap: togglePages);
     }
   }
 }

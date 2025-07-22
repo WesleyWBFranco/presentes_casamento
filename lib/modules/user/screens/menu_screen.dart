@@ -51,117 +51,26 @@ class _MenuScreenState extends State<MenuScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
         child: Column(
           crossAxisAlignment:
-              CrossAxisAlignment.center, // Centraliza o conteúdo horizontalmente
+              CrossAxisAlignment
+                  .center, // Centraliza o conteúdo horizontalmente
           children: [
-            // Primeira linha de cards (Localização da Igreja e Localização da Festa)
+            // NOVA PRIMEIRA LINHA: Lista de Presentes (sozinha e centralizada)
             Row(
-              mainAxisAlignment:
-                  MainAxisAlignment.spaceEvenly, // Distribui o espaço igualmente
-              children: [
-                Expanded(
-                  child: _buildCard(
-                    iconWidget: Image.asset(
-                      'assets/images/igreja.png', // SUBSTITUA PELO SEU CAMINHO CORRETO
-                      height: 180,
-                    ),
-                    title: 'Localização da Igreja',
-                    buttonText: 'Acessar',
-                    onPressed: () {
-                      _launchUrl('https://maps.app.goo.gl/FqQGdz3brF1zhyE78');
-                    },
-                  ),
-                ),
-                const SizedBox(width: 15), // Espaçamento entre os cards
-                Expanded(
-                  child: _buildCard(
-                    iconWidget: Image.asset(
-                      'assets/images/festa.png', // SUBSTITUA PELO SEU CAMINHO CORRETO
-                      height: 180,
-                    ),
-                    title: 'Localização da Festa',
-                    buttonText: 'Acessar',
-                    onPressed: () {
-                      _launchUrl('https://maps.app.goo.gl/HYjaUHja6br5E137A');
-                    },
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 30), // Espaçamento entre as linhas de cards
-            // Segunda linha de cards (Lista de Presença e Contatos Úteis)
-            Row(
-              mainAxisAlignment:
-                  MainAxisAlignment.spaceEvenly, // Distribui o espaço igualmente
-              children: [
-                Expanded(
-                  child: _buildCard(
-                    iconWidget: Image.asset(
-                      'assets/images/presença.png', // SUBSTITUA AQUI PELO CAMINHO DA SUA IMAGEM (EX: 'assets/images/lista_presenca.png')
-                      height: 180,
-                    ),
-                    title: 'Lista de Presença',
-                    buttonText: 'Acessar',
-                    onPressed: () {
-                      // SUBSTITUA AQUI PELO LINK DO SEU FORMULÁRIO DO GOOGLE
-                      _launchUrl('https://forms.gle/WqYn3VXgcsCYArbD8');
-                    },
-                  ),
-                ),
-                const SizedBox(width: 15), // Espaçamento entre os cards
-                Expanded(
-                  child: _buildCard(
-                    iconWidget: Image.asset(
-                      'assets/images/contato.png', // SUBSTITUA PELO SEU CAMINHO CORRETO
-                      height: 180,
-                    ),
-                    title: 'Contatos Úteis',
-                    buttonText: 'Acessar',
-                    onPressed: () {
-                      final standardScreenState =
-                          context.findAncestorStateOfType<StandardScreenState>();
-                      if (standardScreenState != null) {
-                        standardScreenState.changePage(
-                          4,
-                          fromDrawer: false,
-                        ); // ContactScreen é o índice 4
-                      } else {
-                        debugPrint(
-                          'StandardScreenState não encontrado. Não foi possível navegar para Contatos.',
-                        );
-                        if (mounted) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text(
-                                'Erro: Não foi possível navegar para a tela de Contatos.',
-                              ),
-                              backgroundColor: Colors.red,
-                            ),
-                          );
-                        }
-                      }
-                    },
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 30), // Espaçamento entre as linhas de cards
-            // Terceira linha de cards (Lista de Presentes)
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center, // Centraliza o card se estiver sozinho
+              mainAxisAlignment: MainAxisAlignment.center, // Centraliza o card
               children: [
                 Expanded(
                   child: _buildCard(
                     iconWidget: Image.asset(
                       'assets/images/presentes.png', // SUBSTITUA PELO SEU CAMINHO CORRETO
-                      height: 180,
+                      height: 150, // Tamanho da imagem um pouco menor
                     ),
                     title: 'Lista de Presentes',
                     buttonText: 'Acessar',
                     onPressed: () {
                       final standardScreenState =
-                          context.findAncestorStateOfType<StandardScreenState>();
+                          context
+                              .findAncestorStateOfType<StandardScreenState>();
                       if (standardScreenState != null) {
-                        // AQUI ESTÁ A MUDANÇA: Passa o argumento para ativar o popup na PresentScreen
                         standardScreenState.changePage(
                           1, // Índice da PresentScreen
                           fromDrawer: false,
@@ -176,6 +85,100 @@ class _MenuScreenState extends State<MenuScreen> {
                             const SnackBar(
                               content: Text(
                                 'Erro: Não foi possível navegar para a tela de Presentes.',
+                              ),
+                              backgroundColor: Colors.red,
+                            ),
+                          );
+                        }
+                      }
+                    },
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 20), // Espaçamento entre as linhas de cards
+            // SEGUNDA LINHA: Localização da Igreja e Localização da Festa
+            Row(
+              mainAxisAlignment:
+                  MainAxisAlignment
+                      .spaceEvenly, // Distribui o espaço igualmente
+              children: [
+                Expanded(
+                  child: _buildCard(
+                    iconWidget: Image.asset(
+                      'assets/images/igreja.png', // SUBSTITUA PELO SEU CAMINHO CORRETO
+                      height: 150, // Tamanho da imagem um pouco menor
+                    ),
+                    title: 'Localização da Igreja',
+                    buttonText: 'Acessar',
+                    onPressed: () {
+                      _launchUrl('https://maps.app.goo.gl/FqQGdz3brF1zhyE78');
+                    },
+                  ),
+                ),
+                const SizedBox(width: 15), // Espaçamento entre os cards
+                Expanded(
+                  child: _buildCard(
+                    iconWidget: Image.asset(
+                      'assets/images/festa.png', // SUBSTITUA PELO SEU CAMINHO CORRETO
+                      height: 150, // Tamanho da imagem um pouco menor
+                    ),
+                    title: 'Localização da Festa',
+                    buttonText: 'Acessar',
+                    onPressed: () {
+                      _launchUrl('https://maps.app.goo.gl/HYjaUHja6br5E137A');
+                    },
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 20), // Espaçamento entre as linhas de cards
+            // TERCEIRA LINHA: Lista de Presença e Contatos Úteis
+            Row(
+              mainAxisAlignment:
+                  MainAxisAlignment
+                      .spaceEvenly, // Distribui o espaço igualmente
+              children: [
+                Expanded(
+                  child: _buildCard(
+                    iconWidget: Image.asset(
+                      'assets/images/presença.png', // SUBSTITUA AQUI PELO CAMINHO DA SUA IMAGEM
+                      height: 150, // Tamanho da imagem um pouco menor
+                    ),
+                    title: 'Lista de Presença',
+                    buttonText: 'Acessar',
+                    onPressed: () {
+                      _launchUrl('https://forms.gle/WqYn3VXgcsCYArbD8');
+                    },
+                  ),
+                ),
+                const SizedBox(width: 15), // Espaçamento entre os cards
+                Expanded(
+                  child: _buildCard(
+                    iconWidget: Image.asset(
+                      'assets/images/contato.png', // SUBSTITUA PELO SEU CAMINHO CORRETO
+                      height: 150, // Tamanho da imagem um pouco menor
+                    ),
+                    title: 'Contatos Úteis',
+                    buttonText: 'Acessar',
+                    onPressed: () {
+                      final standardScreenState =
+                          context
+                              .findAncestorStateOfType<StandardScreenState>();
+                      if (standardScreenState != null) {
+                        standardScreenState.changePage(
+                          4,
+                          fromDrawer: false,
+                        ); // ContactScreen é o índice 4
+                      } else {
+                        debugPrint(
+                          'StandardScreenState não encontrado. Não foi possível navegar para Contatos.',
+                        );
+                        if (mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(
+                                'Erro: Não foi possível navegar para a tela de Contatos.',
                               ),
                               backgroundColor: Colors.red,
                             ),
@@ -210,7 +213,8 @@ class _MenuScreenState extends State<MenuScreen> {
       ),
       color: Colors.white,
       child: Container(
-        height: 310, // Altura fixa para o conteúdo do card
+        height:
+            280, // Altura fixa para o conteúdo do card (diminuída de 310 para 280)
         padding: const EdgeInsets.all(15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -225,7 +229,7 @@ class _MenuScreenState extends State<MenuScreen> {
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: GoogleFonts.libreBaskerville(
-                  fontSize: 14,
+                  fontSize: 13, // Fonte um pouco menor
                   fontWeight: FontWeight.bold,
                   color: Colors.black87,
                 ),

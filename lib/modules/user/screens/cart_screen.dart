@@ -17,6 +17,12 @@ class _CartScreenState extends State<CartScreen> {
   bool _isConfirming = false;
   OverlayEntry? _confirmationOverlay;
 
+  // Dados do PIX para a tela de confirmação
+  final String pixQrCodeImagePath =
+      'assets/images/qrcode.png'; // Caminho do seu QR Code
+  final String pixCopyPasteCode =
+      '12345678901'; // Chave PIX aleatória, você pode alterar
+
   Future<void> _confirmCart(
     BuildContext context,
     CartService cartService,
@@ -273,96 +279,134 @@ class _CartScreenState extends State<CartScreen> {
                           builder:
                               (context) => AlertDialog(
                                 backgroundColor: Colors.white,
-                                title: Text(
-                                  'Confirmar Presentes',
-                                  style: GoogleFonts.libreBaskerville(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                  side: const BorderSide(
                                     color: Colors.black,
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.bold,
+                                    width: 2,
                                   ),
                                 ),
-                                content: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    const SizedBox(height: 24),
-                                    // Usando Row para alinhar Pix e chave
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                // Definindo o maxWidth para o AlertDialog
+                                // para respeitar os limites da StandardScreen
+                                content: Container(
+                                  width:
+                                      450.0, // Largura máxima para o conteúdo do AlertDialog
+                                  child: SingleChildScrollView(
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
                                       children: [
                                         Text(
-                                          'Pix: ',
-                                          style: GoogleFonts.rajdhani(
+                                          'Confirmação de Pagamento',
+                                          textAlign: TextAlign.center,
+                                          style: GoogleFonts.libreBaskerville(
                                             color: Colors.black,
                                             fontSize: 22,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                        SelectableText(
-                                          '08699181922',
-                                          style: GoogleFonts.rajdhani(
-                                            color: Colors.black,
-                                            fontSize: 16,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        const SizedBox(width: 10),
-                                        TextButton.icon(
-                                          onPressed: () async {
-                                            await Clipboard.setData(
-                                              const ClipboardData(
-                                                text: '08699181922',
+                                        const SizedBox(height: 20),
+                                        Image.asset(
+                                          pixQrCodeImagePath,
+                                          height: 180,
+                                          width: 180,
+                                          fit: BoxFit.contain,
+                                          errorBuilder: (
+                                            context,
+                                            error,
+                                            stackTrace,
+                                          ) {
+                                            return const Icon(
+                                              Icons.qr_code_2,
+                                              size: 180,
+                                              color: Colors.grey,
+                                            );
+                                          },
+                                        ),
+                                        const SizedBox(height: 20),
+                                        GestureDetector(
+                                          onTap: () {
+                                            Clipboard.setData(
+                                              ClipboardData(
+                                                text: pixCopyPasteCode,
                                               ),
                                             );
-                                            if (cartScreenContext.mounted) {
-                                              ScaffoldMessenger.of(
-                                                cartScreenContext,
-                                              ).showSnackBar(
-                                                const SnackBar(
-                                                  content: Text(
-                                                    'Chave Pix copiada!',
+                                            ScaffoldMessenger.of(
+                                              context,
+                                            ).showSnackBar(
+                                              const SnackBar(
+                                                content: Text(
+                                                  'Chave PIX copiada!',
+                                                ),
+                                                backgroundColor: Colors.green,
+                                              ),
+                                            );
+                                          },
+                                          child: Container(
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 15,
+                                              vertical: 10,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              color: Colors.grey[200],
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                              border: Border.all(
+                                                color: Colors.black,
+                                                width: 1,
+                                              ),
+                                            ),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Text(
+                                                  pixCopyPasteCode,
+                                                  style: GoogleFonts.rajdhani(
+                                                    color: Colors.black,
+                                                    fontSize: 18,
+                                                    fontWeight: FontWeight.bold,
                                                   ),
                                                 ),
-                                              );
-                                            }
-                                          },
-                                          icon: const Icon(
-                                            Icons.copy,
-                                            color: Colors.black,
-                                          ),
-                                          label: Text(
-                                            'Copiar Chave',
-                                            style: GoogleFonts.rajdhani(
-                                              color: Colors.black,
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w700,
+                                                const SizedBox(width: 10),
+                                                const Icon(
+                                                  Icons.copy,
+                                                  size: 20,
+                                                  color: Colors.black,
+                                                ),
+                                              ],
                                             ),
                                           ),
                                         ),
+                                        const SizedBox(height: 20),
+                                        Text(
+                                          'Total: R\$ ${totalAmount.toStringAsFixed(2)}',
+                                          style: GoogleFonts.rajdhani(
+                                            color: Colors.black,
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 20),
+                                        Text(
+                                          'Escaneie o QR Code ou clique em "Copiar Chave PIX". Abra o aplicativo do seu banco, selecione a opção PIX, cole a chave ou use a leitura de QR Code e confirme o pagamento do valor total. Não se esqueça de clicar em "Confirmar" aqui no aplicativo após o pagamento!',
+                                          textAlign: TextAlign.center,
+                                          style: GoogleFonts.libreBaskerville(
+                                            color: Colors.black87,
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 20),
                                       ],
                                     ),
-                                    const SizedBox(height: 24),
-                                    Text(
-                                      'Total: R\$ ${totalAmount.toStringAsFixed(2)}',
-                                      style: GoogleFonts.rajdhani(
-                                        color: Colors.black,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 24),
-                                  ],
+                                  ),
                                 ),
                                 actions: [
                                   Row(
-                                    // Usando Row para alinhar os botões
                                     mainAxisAlignment:
-                                        MainAxisAlignment
-                                            .spaceAround, // Distribui o espaço entre os botões
+                                        MainAxisAlignment.spaceAround,
                                     children: [
                                       Expanded(
-                                        // Faz o botão "Cancelar" ocupar o espaço disponível
                                         child: TextButton(
                                           style: ButtonStyle(
                                             side: MaterialStateProperty.all<
@@ -378,7 +422,7 @@ class _CartScreenState extends State<CartScreen> {
                                             >(
                                               const EdgeInsets.symmetric(
                                                 vertical: 8,
-                                              ), // Reduz o padding vertical
+                                              ),
                                             ),
                                           ),
                                           child: Text(
@@ -393,18 +437,22 @@ class _CartScreenState extends State<CartScreen> {
                                               () => Navigator.pop(context),
                                         ),
                                       ),
-                                      const SizedBox(
-                                        width: 10,
-                                      ), // Espaçamento entre os botões
+                                      const SizedBox(width: 10),
                                       Expanded(
-                                        // Faz o botão "Confirmar" ocupar o espaço disponível
                                         child: TextButton(
                                           style: TextButton.styleFrom(
                                             backgroundColor: Colors.black,
                                             padding: const EdgeInsets.symmetric(
                                               vertical: 8,
-                                            ), // Reduz o padding vertical
+                                            ),
                                           ),
+                                          onPressed: () async {
+                                            Navigator.pop(context);
+                                            await _confirmCart(
+                                              cartScreenContext,
+                                              cartService,
+                                            );
+                                          },
                                           child: Text(
                                             'Confirmar',
                                             style: GoogleFonts.libreBaskerville(
@@ -413,13 +461,6 @@ class _CartScreenState extends State<CartScreen> {
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
-                                          onPressed: () async {
-                                            Navigator.pop(context);
-                                            await _confirmCart(
-                                              cartScreenContext,
-                                              cartService,
-                                            ); // Use o contexto capturado
-                                          },
                                         ),
                                       ),
                                     ],

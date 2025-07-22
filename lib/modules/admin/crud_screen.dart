@@ -20,6 +20,8 @@ class _CrudScreenState extends State<CrudScreen> {
   final TextEditingController imagePathController = TextEditingController();
   final TextEditingController quantityController = TextEditingController();
   final TextEditingController categoryController = TextEditingController();
+  // REMOVIDO: Controller para a descrição (não é mais necessário)
+  // final TextEditingController descriptionController = TextEditingController();
 
   String _searchQuery = '';
   String selectedCategory = 'Todas';
@@ -37,6 +39,13 @@ class _CrudScreenState extends State<CrudScreen> {
   @override
   void dispose() {
     _searchController.dispose();
+    nameController.dispose();
+    priceController.dispose();
+    imagePathController.dispose();
+    quantityController.dispose();
+    categoryController.dispose();
+    // REMOVIDO: Dispose do controller de descrição
+    // descriptionController.dispose();
     super.dispose();
   }
 
@@ -83,12 +92,16 @@ class _CrudScreenState extends State<CrudScreen> {
       quantityController.text = (existingData['quantity'] ?? '').toString();
       categoryController.text = existingData['category'] ?? '';
       _selectedExistingCategory = existingData['category'];
+      // REMOVIDO: Preenche a descrição
+      // descriptionController.text = existingData['description'] ?? '';
     } else {
       nameController.clear();
       priceController.clear();
       imagePathController.clear();
       quantityController.clear();
       categoryController.clear();
+      // REMOVIDO: Limpa a descrição
+      // descriptionController.clear();
     }
 
     await showDialog(
@@ -150,6 +163,19 @@ class _CrudScreenState extends State<CrudScreen> {
                     ),
                     keyboardType: TextInputType.number,
                   ),
+                  // REMOVIDO: Campo de texto para a descrição
+                  // TextField(
+                  //   controller: descriptionController,
+                  //   decoration: const InputDecoration(
+                  //     labelText: "Descrição (opcional)",
+                  //     labelStyle: TextStyle(color: Colors.black),
+                  //     focusedBorder: UnderlineInputBorder(
+                  //       borderSide: BorderSide(color: Colors.black, width: 2),
+                  //     ),
+                  //   ),
+                  //   maxLines: 2,
+                  //   keyboardType: TextInputType.multiline,
+                  // ),
                   const SizedBox(height: 20),
                   DropdownButtonFormField<String>(
                     decoration: const InputDecoration(
@@ -200,13 +226,11 @@ class _CrudScreenState extends State<CrudScreen> {
             ),
             actions: [
               Row(
-                // Adicionado Row para alinhar os botões lado a lado
                 mainAxisAlignment:
                     MainAxisAlignment
                         .spaceAround, // Distribui o espaço entre os botões
                 children: [
                   Expanded(
-                    // Faz o botão "Cancelar" ocupar o espaço disponível
                     child: TextButton(
                       style: ButtonStyle(
                         side: WidgetStateProperty.all<BorderSide>(
@@ -231,7 +255,6 @@ class _CrudScreenState extends State<CrudScreen> {
                   ),
                   const SizedBox(width: 10), // Espaçamento entre os botões
                   Expanded(
-                    // Faz o botão "Salvar" ocupar o espaço disponível
                     child: TextButton(
                       style: TextButton.styleFrom(
                         backgroundColor: Colors.black,
@@ -240,13 +263,14 @@ class _CrudScreenState extends State<CrudScreen> {
                         ), // Reduz o padding vertical
                       ),
                       onPressed: () async {
-                        // REVERTIDO: Cria o objeto Present diretamente dos controllers
                         final present = Present(
                           name: nameController.text,
                           price: double.tryParse(priceController.text) ?? 0.0,
                           imagePath: imagePathController.text,
                           quantity: int.tryParse(quantityController.text) ?? 0,
                           category: categoryController.text.trim(),
+                          // REMOVIDO: Adiciona a descrição
+                          // description: descriptionController.text.trim(),
                         );
 
                         if (docID == null) {
@@ -374,6 +398,8 @@ class _CrudScreenState extends State<CrudScreen> {
                             imagePath: data['imagePath'] ?? '',
                             quantity: (data['quantity'] as num?)?.toInt() ?? 0,
                             category: data['category']?.toString() ?? '',
+                            // REMOVIDO: Pega a descrição
+                            // description: data['description']?.toString() ?? '',
                           );
                           final category = data['category']?.toString() ?? '';
 
@@ -384,9 +410,15 @@ class _CrudScreenState extends State<CrudScreen> {
                               .toString()
                               .toLowerCase()
                               .contains(_searchQuery);
+                          // REMOVIDO: Adiciona busca por descrição
+                          // final descriptionMatches = present.description
+                          //     .toLowerCase()
+                          //     .contains(_searchQuery);
+
                           return (selectedCategory == 'Todas' ||
                                   category == selectedCategory) &&
-                              (nameMatches || priceMatches);
+                              (nameMatches ||
+                                  priceMatches); // REMOVIDO: Inclui descrição na busca
                         }).toList();
 
                     return ListView.builder(
@@ -417,14 +449,19 @@ class _CrudScreenState extends State<CrudScreen> {
                                 ),
                               ),
                             ),
-                            title: Text(
-                              data['name'] ?? 'Sem nome',
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: GoogleFonts.libreBaskerville(
-                                color: Colors.black,
-                                fontSize: 18,
-                                fontWeight: FontWeight.w800,
+                            title: SizedBox(
+                              // ENVOLVIDO EM SIZEDBOX PARA ALTURA FIXA
+                              height:
+                                  40, // Altura para acomodar 2 linhas de texto
+                              child: Text(
+                                data['name'] ?? 'Sem nome',
+                                maxLines: 2, // Permite duas linhas
+                                overflow: TextOverflow.ellipsis,
+                                style: GoogleFonts.libreBaskerville(
+                                  color: Colors.black,
+                                  fontSize: 15, // FONTE MENOR: Ajustado para 15
+                                  fontWeight: FontWeight.w800,
+                                ),
                               ),
                             ),
                             subtitle: Text(
