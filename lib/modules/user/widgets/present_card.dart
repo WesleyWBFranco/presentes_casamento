@@ -8,15 +8,13 @@ import 'package:provider/provider.dart';
 class PresentCard extends StatefulWidget {
   final Present present;
   final String documentId;
-  final double
-  imageHeight; // This parameter will now be overridden by fixed image size
+  final double imageHeight;
 
   const PresentCard({
     super.key,
     required this.present,
     required this.documentId,
-    this.imageHeight =
-        150.0, // This value will be ignored for the actual image size
+    this.imageHeight = 150.0,
   });
 
   @override
@@ -52,28 +50,23 @@ class _PresentCardState extends State<PresentCard> {
                 borderRadius: const BorderRadius.vertical(
                   top: Radius.circular(8),
                 ),
-                child: Center(
-                  // Center the image within its allocated space
-                  child: SizedBox(
-                    height:
-                        130.0, // AUMENTADO: Altura fixa para a área da imagem
-                    width:
-                        130.0, // AUMENTADO: Largura fixa para a área da imagem
-                    child:
-                        widget.present.imagePath.isNotEmpty
-                            ? Image.network(
-                              widget.present.imagePath,
-                              fit:
-                                  BoxFit
-                                      .contain, // Mantido como contain para não cortar e preservar qualidade
-                              errorBuilder: (context, error, stackTrace) {
-                                return const Center(
-                                  child: Icon(Icons.image_not_supported),
-                                );
-                              },
-                            )
-                            : const Center(child: Icon(Icons.image)),
-                  ),
+                child: SizedBox(
+                  height:
+                      widget
+                          .imageHeight, // REVERTIDO: Usando widget.imageHeight
+                  width: double.infinity, // REVERTIDO: Usando double.infinity
+                  child:
+                      widget.present.imagePath.isNotEmpty
+                          ? Image.network(
+                            widget.present.imagePath,
+                            fit: BoxFit.cover, // REVERTIDO: Usando BoxFit.cover
+                            errorBuilder: (context, error, stackTrace) {
+                              return const Center(
+                                child: Icon(Icons.image_not_supported),
+                              );
+                            },
+                          )
+                          : const Center(child: Icon(Icons.image)),
                 ),
               ),
               Padding(
@@ -88,10 +81,10 @@ class _PresentCardState extends State<PresentCard> {
                         widget.present.name,
                         style: GoogleFonts.libreBaskerville(
                           color: Colors.black,
-                          fontSize: 14, // DIMINUÍDO: Tamanho da fonte do título
+                          fontSize: 14, // Mantido: Tamanho da fonte do título
                           fontWeight: FontWeight.w500,
                         ),
-                        maxLines: 2, // Display up to two lines
+                        maxLines: 2, // Mantido: Display up to two lines
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
