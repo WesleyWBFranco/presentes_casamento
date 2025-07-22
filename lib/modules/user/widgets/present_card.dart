@@ -55,15 +55,17 @@ class _PresentCardState extends State<PresentCard> {
                 child: Center(
                   // Center the image within its allocated space
                   child: SizedBox(
-                    height: 100.0, // Fixed height for the image area
-                    width: 100.0, // Fixed width for the image area
+                    height:
+                        130.0, // AUMENTADO: Altura fixa para a área da imagem
+                    width:
+                        130.0, // AUMENTADO: Largura fixa para a área da imagem
                     child:
                         widget.present.imagePath.isNotEmpty
                             ? Image.network(
                               widget.present.imagePath,
                               fit:
                                   BoxFit
-                                      .contain, // Changed to contain to show full image and prevent stretching
+                                      .contain, // Mantido como contain para não cortar e preservar qualidade
                               errorBuilder: (context, error, stackTrace) {
                                 return const Center(
                                   child: Icon(Icons.image_not_supported),
@@ -86,7 +88,7 @@ class _PresentCardState extends State<PresentCard> {
                         widget.present.name,
                         style: GoogleFonts.libreBaskerville(
                           color: Colors.black,
-                          fontSize: 15, // Decreased font size
+                          fontSize: 14, // DIMINUÍDO: Tamanho da fonte do título
                           fontWeight: FontWeight.w500,
                         ),
                         maxLines: 2, // Display up to two lines

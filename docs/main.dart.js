@@ -99324,7 +99324,7 @@ A.ark.prototype={
 $2(a,b){return a+b.a.b*b.c},
 $S:225}
 A.arl.prototype={
-$2(a,b){var s=null,r=this.a[b],q=A.Mb(B.e,2),p=A.bn(8),o=r.a,n=A.An(A.bn(6),A.aEg(o.c,s,B.ew,50,50),B.by),m=A.aw(o.a,1,B.aD,s,A.bc().$3$color$fontSize$fontWeight(B.e,18,B.dV),s,s),l=this.b
+$2(a,b){var s=null,r=this.a[b],q=A.Mb(B.e,2),p=A.bn(8),o=r.a,n=A.An(A.bn(6),A.aEg(o.c,s,B.ew,50,50),B.by),m=A.aw(o.a,2,B.aD,s,A.bc().$3$color$fontSize$fontWeight(B.e,14,B.dV),s,s),l=this.b
 return A.fe(s,A.acC(n,s,A.aw("R$ "+B.d.ab(o.b*r.c,2),s,s,s,A.ha().$3$color$fontSize$fontWeight(B.e,16,B.M),s,s),m,A.dS(A.b([A.nX(s,s,s,B.IY,s,s,new A.ari(l,r),s,s,s,s),A.aw(""+r.c,s,s,s,A.bc().$3$color$fontSize$fontWeight(B.e,14,B.M),s,s),A.nX(s,s,s,B.Ja,s,s,new A.arj(l,r),s,s,s,s)],t.p),B.y,B.O,B.aW)),B.w,s,s,new A.dj(B.j,s,q,p,s,s,B.aq),s,s,B.HV,s,s,s,s)},
 $S:223}
 A.ari.prototype={
@@ -99651,8 +99651,8 @@ A.DS.prototype={
 ag(){return new A.YN()}}
 A.YN.prototype={
 J(a){var s,r,q,p,o,n,m,l,k=this,j=null,i="Presenteado",h=k.a.c,g=k.d,f=h.d===0,e=A.bn(8),d=h.c
-d=A.An(B.CO,A.eX(A.bT(d.length!==0?A.aEg(d,new A.ax2(),B.jj,j,j):B.F6,100,100),j,j),B.by)
-s=A.bT(A.aw(h.a,2,B.aD,j,A.bc().$3$color$fontSize$fontWeight(B.e,15,B.M),j,j),40,j)
+d=A.An(B.CO,A.eX(A.bT(d.length!==0?A.aEg(d,new A.ax2(),B.jj,j,j):B.F6,130,130),j,j),B.by)
+s=A.bT(A.aw(h.a,2,B.aD,j,A.bc().$3$color$fontSize$fontWeight(B.e,14,B.M),j,j),40,j)
 if(f)r=A.aIT(B.J7,A.aw(i,j,j,j,A.bc().$3$color$fontSize$fontWeight(B.e,14,B.be),j,j),j,A.lP(j,j,j,B.j,j,j,j,j,j,j,j,j,B.bu,j,new A.bz(A.bn(8),new A.aM(B.e,1.5,B.v,-1)),j,j,j,j,j))
 else{r=A.bn(12)
 r=new A.wh(new A.ax3(k),new A.ax4(k),new A.Qj(j,j,j,j,A.aXN(j,j,j,j,j,j,j,j,j,j,j,j,B.bu,j,new A.bz(A.bn(8),B.o),B.b1,j,j,j,j),j,j,!1,j,!0,j,A.aw("Quantidade: "+k.d,j,j,j,A.bc().$2$color$fontWeight(B.e,B.be),j,j),j),new A.bz(r,B.b1),B.j,j,t.nT)}r=A.bT(r,50,1/0)

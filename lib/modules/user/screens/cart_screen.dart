@@ -175,11 +175,11 @@ class _CartScreenState extends State<CartScreen> {
                       ),
                       title: Text(
                         item.present.name,
-                        maxLines: 1,
+                        maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.libreBaskerville(
                           color: Colors.black,
-                          fontSize: 18,
+                          fontSize: 14,
                           fontWeight: FontWeight.w800,
                         ),
                       ),
