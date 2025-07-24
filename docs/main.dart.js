@@ -99352,8 +99352,8 @@ $0(){var s=this
 A.Ld(!0,new A.arg(s.a,s.c,s.d,s.e),s.b,t.z)},
 $S:0}
 A.arg.prototype={
-$1(a){var s=this,r=null,q=A.bn(15),p=A.aw("Confirma\xe7\xe3o de Pagamento",r,r,r,A.bc().$3$color$fontSize$fontWeight(B.e,22,B.N),B.bp,r),o=A.fj("assets/images/qrcode.png",r,new A.arc(),B.mS,180,180),n=s.a,m=A.bn(8),l=A.Mb(B.e,1),k=t.p
-m=A.fe(r,A.oW(A.cI(A.b([p,B.bk,o,B.bk,A.fi(r,A.fe(r,A.dS(A.b([A.aw("12345678901",r,r,r,A.ha().$3$color$fontSize$fontWeight(B.e,18,B.N),r,r),B.iA,B.oT],k),B.y,B.O,B.aW),B.w,r,r,new A.dj(B.jw,r,l,m,r,r,B.aq),r,r,r,B.o6,r,r,r),B.a7,!1,r,r,r,r,r,r,r,r,r,r,r,r,r,new A.ard(n,a),r,r,r,r,r,r),B.bk,A.aw("Total: R$ "+B.d.ab(s.b,2),r,r,r,A.ha().$3$color$fontSize$fontWeight(B.e,18,B.N),r,r),B.bk,A.aw('Escaneie o QR Code ou clique em "Copiar Chave PIX". Abra o aplicativo do seu banco, selecione a op\xe7\xe3o PIX, cole a chave ou use a leitura de QR Code e confirme o pagamento do valor total. N\xe3o se esque\xe7a de clicar em "Confirmar" aqui no aplicativo ap\xf3s o pagamento!',r,r,r,A.bc().$2$color$fontSize(B.T,14),B.bp,r),B.bk],k),B.y,B.O,B.aW),r),B.w,r,r,r,r,r,r,r,r,r,450)
+$1(a){var s=this,r=null,q=A.bn(15),p=A.aw("Confirma\xe7\xe3o de Pagamento",r,r,r,A.bc().$3$color$fontSize$fontWeight(B.e,22,B.N),B.bp,r),o=A.fj("assets/images/qrcode2.png",r,new A.arc(),B.mS,180,180),n=s.a,m=A.bn(8),l=A.Mb(B.e,1),k=t.p
+m=A.fe(r,A.oW(A.cI(A.b([p,B.bk,o,B.bk,A.fi(r,A.fe(r,A.dS(A.b([A.aw("brunalnervis2018@gmail.com",r,r,r,A.ha().$3$color$fontSize$fontWeight(B.e,18,B.N),r,r),B.iA,B.oT],k),B.y,B.O,B.aW),B.w,r,r,new A.dj(B.jw,r,l,m,r,r,B.aq),r,r,r,B.o6,r,r,r),B.a7,!1,r,r,r,r,r,r,r,r,r,r,r,r,r,new A.ard(n,a),r,r,r,r,r,r),B.bk,A.aw("Total: R$ "+B.d.ab(s.b,2),r,r,r,A.ha().$3$color$fontSize$fontWeight(B.e,18,B.N),r,r),B.bk,A.aw('Escaneie o QR Code ou clique em "Copiar Chave PIX". Abra o aplicativo do seu banco, selecione a op\xe7\xe3o PIX, cole a chave ou use a leitura de QR Code, coloque o valor do presente e confirme o pagamento do valor total. N\xe3o se esque\xe7a de clicar em "Confirmar" aqui no aplicativo ap\xf3s o pagamento!',r,r,r,A.bc().$2$color$fontSize(B.T,14),B.bp,r),B.bk],k),B.y,B.O,B.aW),r),B.w,r,r,r,r,r,r,r,r,r,450)
 l=A.nu(r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,new A.b5(B.bu,t.mD),r,r,new A.b5(B.b1,t.z_),r,r,r,r,r)
 l=A.fS(A.FP(A.aw("Cancelar",r,r,r,A.bc().$3$color$fontSize$fontWeight(B.e,14,B.N),r,r),new A.are(a),l),1)
 o=A.anL(r,r,B.e,r,r,r,r,r,r,r,r,r,B.bu,r,r,r,r,r,r,r)
@@ -99363,7 +99363,7 @@ A.arc.prototype={
 $3(a,b,c){return B.oU},
 $S:110}
 A.ard.prototype={
-$0(){A.q7(new A.lE("12345678901"))
+$0(){A.q7(new A.lE("brunalnervis2018@gmail.com"))
 this.b.ad(t.R).f.hQ(B.TA)},
 $S:0}
 A.are.prototype={
@@ -99411,7 +99411,7 @@ a8Z(a){A.q7(new A.lE(a)).bp(new A.arM(this,a),t.P)},
 J(a){var s,r=null,q=A.aw("Contatos \xdateis",r,r,r,A.bc().$3$color$fontSize$fontWeight(B.e,28,B.N),r,r),p=t.N,o=t.m0,n=A.b([A.ae(["name","Hotel Avenida","phone","(45) 98824 7101","mapLink","https://maps.app.goo.gl/JHhX26KgAYyHNZo89?g_st=ipc"],p,p),A.ae(["name","Hotel Michels","phone","(45) 99822 5252","mapLink","https://maps.app.goo.gl/g9vvT46Mp3Wi2NmU9?g_st=ipc"],p,p)],o)
 n=this.Oy(a,A.b([A.ae(["name","Sal\xe3o da Sol","phone","(45) 98806 3159","mapLink","https://maps.app.goo.gl/H4FwB7WpGm4J9rn89?g_st=ipc"],p,p),A.ae(["name","Sal\xe3o Monalisa","phone","(45) 99844 1279","mapLink","https://maps.app.goo.gl/nyWJeMnV9ABdM2Kn9?g_st=ipc"],p,p)],o),"Missal",n)
 s=A.b([A.ae(["name","Hotel Alvorada","phone","(45) 3268 2258","mapLink","https://maps.app.goo.gl/Q8adSs9pwuDr5P247?g_st=ipc"],p,p),A.ae(["name","Hotel Paludo","phone","(45) 3268 1430","mapLink","https://maps.app.goo.gl/FxtM2FVSGwtNmsQeA?g_st=ipc"],p,p),A.ae(["name","Hotel Simioni","phone","(45) 3268 1343","mapLink","https://maps.app.goo.gl/EDTm4WbFcjfaC7qQ6?g_st=ipc"],p,p)],o)
-return A.oW(A.cI(A.b([new A.b7(B.HN,q,r),n,B.AR,this.Oy(a,A.b([A.ae(["name","Sal\xe3o da Fabrini","phone","(45) 98814 4173","mapLink","https://maps.app.goo.gl/K2TcSV5ajTDtAouF7?g_st=ipc"],p,p),A.ae(["name","Sal\xe3o da Romy","phone","(45) 3268 3236","mapLink","https://maps.app.goo.gl/salaoromy"],p,p),A.ae(["name","Sal\xe3o da Lenita","phone","(45) 3268 2115","mapLink","https://maps.app.goo.gl/PCRsC2nEProTKgFr8?g_st=ipc"],p,p)],o),"Santa Helena",s)],t.p),B.y,B.O,B.K),B.eV)},
+return A.oW(A.cI(A.b([new A.b7(B.HN,q,r),n,B.AR,this.Oy(a,A.b([A.ae(["name","Sal\xe3o da Fabrini","phone","(45) 98814 4173","mapLink","https://maps.app.goo.gl/K2TcSV5ajTDtAouF7?g_st=ipc"],p,p),A.ae(["name","Sal\xe3o da Romy","phone","(45) 3268 3236","mapLink","https://www.google.com.br/maps/"],p,p),A.ae(["name","Sal\xe3o da Lenita","phone","(45) 3268 2115","mapLink","https://maps.app.goo.gl/PCRsC2nEProTKgFr8?g_st=ipc"],p,p)],o),"Santa Helena",s)],t.p),B.y,B.O,B.K),B.eV)},
 Oy(a,b,c,d){var s=null
 return A.cI(A.b([new A.b7(B.HR,A.aw(c,s,s,s,A.bc().$3$color$fontSize$fontWeight(B.T,22,B.N),s,s),s),this.Ox(a,d,"Hot\xe9is"),B.bk,this.Ox(a,b,"Sal\xe3o de Beleza")],t.p),B.bb,B.O,B.K)},
 Ox(a,b,c){var s=null,r=A.bn(15),q=A.b([A.aw(c,s,s,s,A.bc().$3$color$fontSize$fontWeight(B.e,18,B.N),s,s),B.He],t.p)
@@ -99488,7 +99488,7 @@ else{A.ki().$1("StandardScreenState n\xe3o encontrado. N\xe3o foi poss\xedvel na
 if(this.a.c!=null)s.ad(t.R).f.hQ(B.TC)}},
 $S:0}
 A.avX.prototype={
-$0(){this.a.qv("https://maps.app.goo.gl/FqQGdz3brF1zhyE78")},
+$0(){this.a.qv("https://maps.app.goo.gl/U5b81TWHr1YzLcVQ9")},
 $S:0}
 A.avY.prototype={
 $0(){this.a.qv("https://maps.app.goo.gl/HYjaUHja6br5E137A")},
@@ -99564,8 +99564,8 @@ B.b.Y(s,this.b)
 this.a.e=s},
 $S:0}
 A.axc.prototype={
-$1(a){var s=null,r=A.bn(15),q=A.aw("Contribui\xe7\xe3o para os Noivos",s,s,s,A.bc().$3$color$fontSize$fontWeight(B.e,22,B.N),B.bp,s),p=A.aw("Ol\xe1! Se preferir fazer uma contribui\xe7\xe3o direta aos noivos via PIX, voc\xea pode usar o QR Code ou o c\xf3digo abaixo. Caso contr\xe1rio, sinta-se \xe0 vontade para explorar nossa lista de presentes!",s,s,s,A.bc().$2$color$fontSize(B.T,16),B.bp,s),o=A.fj("assets/images/qrcode.png",s,new A.ax9(),B.mS,180,180),n=A.bn(8),m=A.Mb(B.e,1),l=t.p
-n=A.fi(s,A.fe(s,A.dS(A.b([A.aw("08699181922",s,s,s,A.ha().$3$color$fontSize$fontWeight(B.e,18,B.N),s,s),B.iA,B.oT],l),B.y,B.O,B.aW),B.w,s,s,new A.dj(B.jw,s,m,n,s,s,B.aq),s,s,s,B.o6,s,s,s),B.a7,!1,s,s,s,s,s,s,s,s,s,s,s,s,s,new A.axa(this.a,a),s,s,s,s,s,s)
+$1(a){var s=null,r=A.bn(15),q=A.aw("Contribui\xe7\xe3o para os Noivos",s,s,s,A.bc().$3$color$fontSize$fontWeight(B.e,16,B.N),B.bp,s),p=A.aw("Ol\xe1! Se preferir fazer uma contribui\xe7\xe3o direta aos noivos via PIX, voc\xea pode usar o QR Code ou o c\xf3digo abaixo. Caso contr\xe1rio, sinta-se \xe0 vontade para explorar nossa lista de presentes!",s,s,s,A.bc().$2$color$fontSize(B.T,14),B.bp,s),o=A.fj("assets/images/qrcode2.png",s,new A.ax9(),B.mS,180,180),n=A.bn(8),m=A.Mb(B.e,1),l=t.p
+n=A.fi(s,A.fe(s,A.dS(A.b([A.aw("brunalnervis2018@gmail.com",s,s,s,A.ha().$3$color$fontSize$fontWeight(B.e,18,B.N),s,s),B.iA,B.oT],l),B.y,B.O,B.aW),B.w,s,s,new A.dj(B.jw,s,m,n,s,s,B.aq),s,s,s,B.o6,s,s,s),B.a7,!1,s,s,s,s,s,s,s,s,s,s,s,s,s,new A.axa(this.a,a),s,s,s,s,s,s)
 m=A.lP(s,s,B.e,s,s,s,s,s,s,s,s,s,B.HS,s,new A.bz(A.bn(10),B.o),s,s,s,s,s)
 return A.zx(s,B.j,A.fe(s,A.oW(A.cI(A.b([q,B.c2,p,B.bk,o,B.bk,n,B.AR,A.bT(A.qo(!1,A.aw("Continuar para Lista de Presentes",s,s,s,A.bc().$3$color$fontSize$fontWeight(B.j,16,B.N),B.bp,s),s,s,s,s,s,s,new A.axb(a),s,m),s,1/0)],l),B.y,B.O,B.aW),s),B.w,s,s,s,s,s,s,s,s,s,450),new A.bz(r,B.b1),s)},
 $S:51}
@@ -99573,7 +99573,7 @@ A.ax9.prototype={
 $3(a,b,c){return B.oU},
 $S:110}
 A.axa.prototype={
-$0(){A.q7(new A.lE("08699181922"))
+$0(){A.q7(new A.lE("brunalnervis2018@gmail.com"))
 this.b.ad(t.R).f.hQ(B.Ty)},
 $S:0}
 A.axb.prototype={

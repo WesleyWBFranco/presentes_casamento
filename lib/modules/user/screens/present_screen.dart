@@ -29,9 +29,9 @@ class _PresentScreenState extends State<PresentScreen> {
 
   // Dados do PIX (você pode alterar estes valores)
   final String pixQrCodeImagePath =
-      'assets/images/qrcode.png'; // SUBSTITUA PELO SEU CAMINHO DO QR CODE
+      'assets/images/qrcode2.png'; // SUBSTITUA PELO SEU CAMINHO DO QR CODE
   final String pixCopyPasteCode =
-      '08699181922'; // SUBSTITUA PELO SEU CÓDIGO PIX COPIÁVEL
+      'brunalnervis2018@gmail.com'; // SUBSTITUA PELO SEU CÓDIGO PIX COPIÁVEL
 
   @override
   void initState() {
@@ -124,7 +124,7 @@ class _PresentScreenState extends State<PresentScreen> {
                     textAlign: TextAlign.center,
                     style: GoogleFonts.libreBaskerville(
                       color: Colors.black,
-                      fontSize: 22,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -134,7 +134,7 @@ class _PresentScreenState extends State<PresentScreen> {
                     textAlign: TextAlign.center,
                     style: GoogleFonts.libreBaskerville(
                       color: Colors.black87,
-                      fontSize: 16,
+                      fontSize: 14,
                     ),
                   ),
                   const SizedBox(height: 20),

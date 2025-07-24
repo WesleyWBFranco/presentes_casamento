@@ -134,7 +134,7 @@ class _ContactScreenState extends State<ContactScreen> {
               {
                 'name': 'Salão da Romy',
                 'phone': '(45) 3268 3236',
-                'mapLink': 'https://maps.app.goo.gl/salaoromy',
+                'mapLink': 'https://www.google.com.br/maps/',
               }, // SUBSTITUA PELO LINK CORRETO
               {
                 'name': 'Salão da Lenita',

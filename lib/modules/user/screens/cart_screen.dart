@@ -19,9 +19,9 @@ class _CartScreenState extends State<CartScreen> {
 
   // Dados do PIX para a tela de confirmação
   final String pixQrCodeImagePath =
-      'assets/images/qrcode.png'; // Caminho do seu QR Code
+      'assets/images/qrcode2.png'; // Caminho do seu QR Code
   final String pixCopyPasteCode =
-      '12345678901'; // Chave PIX aleatória, você pode alterar
+      'brunalnervis2018@gmail.com'; // Chave PIX aleatória, você pode alterar
 
   Future<void> _confirmCart(
     BuildContext context,
@@ -389,7 +389,7 @@ class _CartScreenState extends State<CartScreen> {
                                         ),
                                         const SizedBox(height: 20),
                                         Text(
-                                          'Escaneie o QR Code ou clique em "Copiar Chave PIX". Abra o aplicativo do seu banco, selecione a opção PIX, cole a chave ou use a leitura de QR Code e confirme o pagamento do valor total. Não se esqueça de clicar em "Confirmar" aqui no aplicativo após o pagamento!',
+                                          'Escaneie o QR Code ou clique em "Copiar Chave PIX". Abra o aplicativo do seu banco, selecione a opção PIX, cole a chave ou use a leitura de QR Code, coloque o valor do presente e confirme o pagamento do valor total. Não se esqueça de clicar em "Confirmar" aqui no aplicativo após o pagamento!',
                                           textAlign: TextAlign.center,
                                           style: GoogleFonts.libreBaskerville(
                                             color: Colors.black87,

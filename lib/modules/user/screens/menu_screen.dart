@@ -112,7 +112,7 @@ class _MenuScreenState extends State<MenuScreen> {
                     title: 'Localização da Igreja',
                     buttonText: 'Acessar',
                     onPressed: () {
-                      _launchUrl('https://maps.app.goo.gl/FqQGdz3brF1zhyE78');
+                      _launchUrl('https://maps.app.goo.gl/U5b81TWHr1YzLcVQ9');
                     },
                   ),
                 ),
