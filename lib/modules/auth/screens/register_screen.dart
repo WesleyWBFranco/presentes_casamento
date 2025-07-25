@@ -15,25 +15,27 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController nameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPwController = TextEditingController();
 
   @override
   void dispose() {
-    emailController.dispose();
+    nameController.dispose();
     passwordController.dispose();
     confirmPwController.dispose();
-    nameController.dispose();
     super.dispose();
   }
 
   Future registerUser() async {
     if (passwordConfirmed()) {
+      // Gera e-mail fictício com base no nome
+      String nome = nameController.text.trim().toLowerCase();
+      String emailFicticio = nome.replaceAll(' ', '_') + "@gmail.com";
+
       try {
         UserCredential? userCredential = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(
-              email: emailController.text.trim(),
+              email: emailFicticio,
               password: passwordController.text.trim(),
             );
 
@@ -41,7 +43,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
         addUserDetails(
           nameController.text.trim(),
-          emailController.text.trim(),
+          emailFicticio,
           userRole,
           userCredential.user!.uid,
         );
@@ -120,7 +122,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 TextField(
                   controller: nameController,
                   decoration: InputDecoration(
-                    labelText: 'Nome',
+                    labelText: 'Nome e sobrenome',
                     labelStyle: GoogleFonts.libreBaskerville(
                       color: Colors.black,
                     ),
@@ -145,36 +147,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                 ),
                 const SizedBox(height: 16),
-
-                TextField(
-                  controller: emailController,
-                  decoration: InputDecoration(
-                    labelText: 'Email',
-                    labelStyle: GoogleFonts.libreBaskerville(
-                      color: Colors.black,
-                    ),
-                    prefixIcon: const Icon(
-                      Icons.email_outlined,
-                      color: Colors.black,
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: Colors.black,
-                        width: 1.5,
-                      ),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: Colors.black,
-                        width: 2,
-                      ),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 16),
-
                 TextField(
                   controller: passwordController,
                   obscureText: true,
@@ -204,7 +176,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                 ),
                 const SizedBox(height: 16),
-
                 TextField(
                   controller: confirmPwController,
                   obscureText: true,
@@ -234,7 +205,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                 ),
                 const SizedBox(height: 24),
-
                 SizedBox(
                   width: double.infinity,
                   height: 50,
@@ -257,7 +227,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                 ),
                 const SizedBox(height: 48),
-
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

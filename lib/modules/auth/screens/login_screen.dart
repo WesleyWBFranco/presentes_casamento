@@ -14,13 +14,17 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController emailController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
   void login() async {
+    // Constrói o "email fictício"
+    String nome = nameController.text.trim().toLowerCase();
+    String emailFicticio = nome.replaceAll(' ', '_') + "@gmail.com";
+
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: emailController.text.trim(),
+        email: emailFicticio,
         password: passwordController.text.trim(),
       );
     } on FirebaseAuthException catch (e) {
@@ -31,14 +35,13 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[300], // cor das laterais
+      backgroundColor: Colors.grey[300],
       body: Center(
         child: Container(
-          width:
-              500, // largura fixa simulando tela de celular (ajuste conforme seu layout)
+          width: 500,
           height: 900,
           decoration: BoxDecoration(
-            color: Colors.white, // fundo branco apenas no conteúdo central
+            color: Colors.white,
             borderRadius: BorderRadius.circular(12),
             boxShadow: [
               BoxShadow(
@@ -71,25 +74,24 @@ class _LoginScreenState extends State<LoginScreen> {
                   'Bruna e Delmar',
                   style: TextStyle(
                     fontFamily: 'Aniyah',
-                    color: Colors.black,  
+                    color: Colors.black,
                     fontSize: 26,
                   ),
                 ),
-
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
                     children: [
                       SizedBox(height: 24),
                       TextField(
-                        controller: emailController,
+                        controller: nameController,
                         decoration: InputDecoration(
-                          labelText: 'Email',
+                          labelText: 'Nome e sobrenome',
                           labelStyle: GoogleFonts.libreBaskerville(
                             color: Colors.black,
                           ),
                           prefixIcon: Icon(
-                            Icons.email_outlined,
+                            Icons.person_outline,
                             color: Colors.black,
                           ),
                           enabledBorder: OutlineInputBorder(
@@ -137,9 +139,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                       ),
-
                       const SizedBox(height: 48),
-
                       SizedBox(
                         width: double.infinity,
                         height: 50,
